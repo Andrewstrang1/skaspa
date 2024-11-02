@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Edit Row</h2>
+<form [formGroup]="form">
+  <div *ngFor="let col of data.columns">
+    <mat-form-field appearance="fill">
+      <mat-label>{{ col | titlecase }}</mat-label>
+      <input matInput [formControlName]="col">
+    </mat-form-field>
+  </div>
+</form>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSave()">Save</button>
+</div>
