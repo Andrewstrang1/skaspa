@@ -1,75 +1,77 @@
-<div class="action-buttons" *ngIf="actionButtons.length">
-    <button *ngFor="let button of actionButtons" (click)="button.handler()">{{ button.label }}</button>
-  </div>
+<div class="action-buttons">
+  <ng-container *ngIf="hasSelectedRows()">
+    <button *ngFor="let button of actionButtons" 
+            (click)="triggerAction(button.handler)" 
+            [attr.aria-label]="button.label" 
+            class="icon-button">
+      <!-- Render SVG using the path from the feature component -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+        <path [attr.d]="button.path"></path>
+      </svg>
+      
+    </button>
+  </ng-container>
+</div>
+
 
 
 <div class="data-table">
-    <table>
-      <!-- Table structure remains unchanged -->
-      <thead>
-        <tr>
-          <th *ngIf="selectable">
-            <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="selectAllChecked" />
-          </th>
-          <th *ngFor="let column of displayedColumns">{{ column | titlecase }}</th>
-          <th *ngIf="showActions">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let row of pagedData">
-          <td *ngIf="selectable">
-            <input type="checkbox" (change)="toggleRowSelection(row, $event)" [checked]="selectedRows.includes(row)" />
-          </td>
-          <td *ngFor="let column of displayedColumns">{{ row[column] }}</td>
-          <td *ngIf="showActions">
-            <button (click)="editRow(row)">Edit</button>
-            <button (click)="deleteRow(row)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  
-    <!-- Pagination with Rows per Page Selector -->
-    <div class="pagination">
-        <!-- First Page Button -->
-        <button (click)="changePage(1)" [disabled]="currentPage === 1" title="First Page">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path d="M4 12l8-8v16zM20 4h-2v16h2z" fill="currentColor" />
-          </svg>
-        </button>
-      
-        <!-- Previous Page Button -->
-        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" title="Previous Page">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path d="M15 19l-7-7 7-7" fill="currentColor" />
-          </svg>
-        </button>
-      
-        <!-- Page Info -->
-        <span>Page {{ currentPage }} of {{ totalPages }}</span>
-      
-        <!-- Next Page Button -->
-        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= totalPages" title="Next Page">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path d="M9 5l7 7-7 7" fill="currentColor" />
-          </svg>
-        </button>
-      
-        <!-- Last Page Button -->
-        <button (click)="changePage(totalPages)" [disabled]="currentPage >= totalPages" title="Last Page">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path d="M20 12l-8 8v-16zM4 4h2v16h-2z" fill="currentColor" />
-          </svg>
-        </button>
-      
-        <!-- Rows per Page Selector -->
-        <div class="page-size-selector">
-          <label for="pageSize">Rows per page:</label>
-          <select id="pageSize" (change)="changePageSize($event)" [value]="pageSize">
-            <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === pageSize">{{ size }}</option>
-          </select>
-        </div>
-      </div>
-      
+  <table>
+    <thead>
+      <tr>
+        <th *ngIf="selectable">
+          <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="selectAllChecked" />
+        </th>
+        <th *ngFor="let column of displayedColumns">{{ column | titlecase }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of pagedData">
+        <td *ngIf="selectable">
+          <input type="checkbox" (change)="toggleRowSelection(row, $event)" [checked]="selectedRows.includes(row)" />
+        </td>
+        <td *ngFor="let column of displayedColumns">{{ row[column] }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination with Rows per Page Selector -->
+  <div class="pagination">
+    <button (click)="changePage(1)" [disabled]="currentPage === 1" title="First Page">
+      <svg width="16" height="16" viewBox="0 0 24 24">
+        <path d="M4 12l8-8v16zM20 4h-2v16h2z" fill="currentColor" />
+      </svg>
+    </button>
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" title="Previous Page">
+      <svg width="16" height="16" viewBox="0 0 24 24">
+        <path d="M15 19l-7-7 7-7" fill="currentColor" />
+      </svg>
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= totalPages" title="Next Page">
+      <svg width="16" height="16" viewBox="0 0 24 24">
+        <path d="M9 5l7 7-7 7" fill="currentColor" />
+      </svg>
+    </button>
+    <button (click)="changePage(totalPages)" [disabled]="currentPage >= totalPages" title="Last Page">
+      <svg width="16" height="16" viewBox="0 0 24 24">
+        <path d="M20 12l-8 8v-16zM4 4h2v16h-2z" fill="currentColor" />
+      </svg>
+    </button>
+
+    <div class="page-size-selector">
+      <label for="goToPage">Go to page:</label>
+      <select id="goToPage" (change)="goToPage($event)" [value]="currentPage">
+        <option *ngFor="let page of totalPagesArray" [value]="page" [selected]="page === currentPage">{{ page }}
+        </option>
+      </select>
+    </div>
+
+    <div class="page-size-selector">
+      <label for="pageSize">Rows per page:</label>
+      <select id="pageSize" (change)="changePageSize($event)" [value]="pageSize">
+        <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === pageSize">{{ size }}</option>
+      </select>
+    </div>
   </div>
-  
+</div>
