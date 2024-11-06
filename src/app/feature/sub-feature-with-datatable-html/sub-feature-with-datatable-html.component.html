@@ -1,12 +1,9 @@
-
 <h2>Feature Component with Data Table</h2>
 <app-data-table-h
   [data]="tableData"
   [displayedColumns]="displayedColumns"
   [selectable]="selectable"
   [actionButtons]="actionButtons"
-  (save)="handleSave($event)"
-  (delete)="handleDelete($event)">
+  [showHamburgerMenu]="showHamburgerMenu"
+  (save)="handleSave($event)">
 </app-data-table-h>
-
-
