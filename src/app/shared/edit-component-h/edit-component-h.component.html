@@ -1,0 +1,13 @@
+<h2>Edit Row</h2>
+<form [formGroup]="form">
+  <div *ngFor="let key of form.controls | keyvalue">
+    <label>{{ key.key | titlecase }}</label>
+    <input [formControlName]="key.key" />
+  </div>
+</form>
+
+<!-- Button Container -->
+<div class="button-container">
+  <button class="save-btn" (click)="onSave()">Save</button>
+  <button class="cancel-btn" (click)="onCancel()">Cancel</button>
+</div>

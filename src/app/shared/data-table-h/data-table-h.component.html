@@ -1,0 +1,120 @@
+<div class="action-buttons">
+  <ng-container *ngIf="hasSelectedRows()">
+    <ng-container *ngFor="let button of actionButtons">
+      <button *ngIf="button.location === 'actionBar' || button.location === 'both'" (click)="triggerAction(button)"
+        [attr.aria-label]="button.label" class="icon-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+          <path [attr.d]="button.iconPath"></path>
+        </svg>
+        {{ button.label }}
+      </button>
+    </ng-container>
+  </ng-container>
+</div>
+
+
+<div class="data-table">
+  <table>
+    <thead>
+      <tr>
+        <th *ngIf="selectable" class="checkbox-column">
+          <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="selectAllChecked" />
+        </th>
+        <th *ngFor="let column of displayedColumns" (click)="sortColumn(column)">
+          {{ column | titlecase }}
+          <span *ngIf="sortedColumn === column">
+            <span *ngIf="sortDirection === 'asc'">&#9650;</span> <!-- Up arrow for ascending -->
+            <span *ngIf="sortDirection === 'desc'">&#9660;</span> <!-- Down arrow for descending -->
+          </span>
+        </th>
+        <th *ngIf="showHamburgerMenu"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let row of pagedData">
+        <td *ngIf="selectable" class="checkbox-column">
+          <input type="checkbox" (change)="toggleRowSelection(row, $event)" [checked]="selectedRows.includes(row)" />
+        </td>
+        <td *ngFor="let column of displayedColumns">{{ row[column] }}</td>
+        <!-- Row dropdown menu with edit and delete -->
+        <td *ngIf="showHamburgerMenu" class="dropdown-column">
+          <button (click)="toggleDropdown(row.id)" class="hamburger-button">&#8942;</button>
+          <div *ngIf="openDropdownRowId === row.id" class="dropdown-menu">
+            <ng-container *ngFor="let button of actionButtons">
+              <button *ngIf="button.location === 'row' || button.location === 'both'"
+                (click)="triggerAction(button, row)">
+                {{ button.label }}
+              </button>
+            </ng-container>
+          </div>
+        </td>
+
+
+      </tr>
+    </tbody>
+  </table>
+
+ <!-- Pagination with Rows per Page Selector -->
+ <div class="pagination">
+  <button (click)="changePage(1)" [disabled]="currentPage === 1" title="First Page">
+    <svg width="16" height="16" viewBox="0 0 24 24">
+      <path d="M4 12l8-8v16zM20 4h-2v16h2z" fill="currentColor" />
+    </svg>
+  </button>
+  <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" title="Previous Page">
+    <svg width="16" height="16" viewBox="0 0 24 24">
+      <path d="M15 19l-7-7 7-7" fill="currentColor" />
+    </svg>
+  </button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= totalPages" title="Next Page">
+    <svg width="16" height="16" viewBox="0 0 24 24">
+      <path d="M9 5l7 7-7 7" fill="currentColor" />
+    </svg>
+  </button>
+  <button (click)="changePage(totalPages)" [disabled]="currentPage >= totalPages" title="Last Page">
+    <svg width="16" height="16" viewBox="0 0 24 24">
+      <path d="M20 12l-8 8v-16zM4 4h2v16h-2z" fill="currentColor" />
+    </svg>
+  </button>
+
+  <div class="page-size-selector">
+    <label for="goToPage">Go to page:</label>
+    <select id="goToPage" (change)="goToPage($event)" [value]="currentPage">
+      <option *ngFor="let page of totalPagesArray" [value]="page" [selected]="page === currentPage">{{ page }}
+      </option>
+    </select>
+  </div>
+
+  <div class="page-size-selector">
+    <label for="pageSize">Rows per page:</label>
+    <select id="pageSize" (change)="changePageSize($event)" [value]="pageSize">
+      <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === pageSize">{{ size }}</option>
+    </select>
+  </div>
+</div>
+</div>
+
+
+<!-- Edit Modal -->
+<div *ngIf="editingRow" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <app-edit-component-h [rowData]="editingRow" (save)="saveData($event)" (cancel)="closeModal()">
+    </app-edit-component-h>
+  </div>
+</div>
+
+<!-- Confirmation Modal -->
+<div *ngIf="confirmingAction" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h3>Confirm Action</h3>
+    <p>Are you sure you want to {{ confirmingAction.button.label }}?</p>
+    <button (click)="confirmAction()">Yes, Confirm</button>
+    <button (click)="closeModal()">Cancel</button>
+  </div>
+</div>
+
+
+
