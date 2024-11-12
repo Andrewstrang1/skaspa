@@ -1,11 +1,18 @@
-<h2>Feature Component with Data Table</h2>
-<app-data-table-h
+<div>
+    <h2>API Integration Feature</h2>
+    
+  </div>
+
+
+  <app-data-table-h
   [data]="tableData"
   [displayedColumns]="displayedColumns"
+  [uniqueKey]="'ProductID'"
   [selectable]="selectable"
   [actionButtons]="actionButtons"
   [showHamburgerMenu]="showHamburgerMenu"
-  [showRating]="showRating"
-  [tableTitle]="'Sample Data Table'" 
+  [tableTitle]="'Products Table'" 
   (save)="handleSave($event)">
 </app-data-table-h>
+
+  

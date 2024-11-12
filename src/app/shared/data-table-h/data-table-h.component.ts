@@ -11,8 +11,6 @@ export interface ActionButton {
   requiresConfirmation?: boolean;  // New property for delete confirmation
 }
 
-
-
 @Component({
   selector: 'app-data-table-h',
   templateUrl: './data-table-h.component.html',
@@ -24,19 +22,26 @@ export class DataTableHComponent implements OnChanges {
   @Input() selectable: boolean = false;
   @Input() actionButtons: ActionButton[] = [];
   @Input() showHamburgerMenu: boolean = false;
+  @Input() uniqueKey: string = 'id'; // Default to 'id'
+  @Input() tableTitle: string = ''; // New property for the table title
+  @Input() showRating: boolean = false;
+
 
   @Output() save = new EventEmitter<any>();  // Emit saved data to feature component
   @Output() edit = new EventEmitter<any>();
 
   pagedData: any[] = [];
-  pageSizeOptions = [5, 10, 20];
-  pageSize = 10;
+  pageSizeOptions = [5, 10, 15, 25, 50, 100];
+  pageSize = 15;
   currentPage = 1;
   selectAllChecked = false;
   openDropdownRowId: number | null = null;
   confirmingAction: { button: ActionButton; row: any } | null = null; // For confirmation modal
   editingRow: any = null; // Tracks the row being edited
   selectedRows: any[] = []; // Stores selected rows
+  searchTerm: string = ''; // Property to hold the search term
+  filteredData: any[] = []; // Array to hold the filtered data
+  loading: boolean = false; // New loading state property
   
 
   // Sorting state
@@ -44,7 +49,9 @@ export class DataTableHComponent implements OnChanges {
   sortDirection: 'asc' | 'desc' | '' = '';
 
   ngOnChanges() {
+    this.setLoading(true); // Start loading when data changes
     this.updatePagedData();
+    this.setLoading(false); // Stop loading once data is updated
   }
 
   // Handle action with optional confirmation
@@ -57,8 +64,13 @@ export class DataTableHComponent implements OnChanges {
       this.editingRow = row; // Open modal for edit
     } else {
       button.handler(row, this.selectedRows); // Directly execute action
+      this.openDropdownRowId = null;
       this.clearSelection(); // Clear selection after action only if no modal or confirmation
     }
+  }
+
+  setLoading(isLoading: boolean) {
+    this.loading = isLoading;
   }
 
   // Confirm and execute the action
@@ -85,18 +97,22 @@ export class DataTableHComponent implements OnChanges {
   
 
   get totalPages(): number {
-    return Math.ceil(this.data.length / this.pageSize);
+    const sourceData = this.searchTerm ? this.filteredData : this.data;
+    return Math.ceil(sourceData.length / this.pageSize);
   }
 
   get totalPagesArray(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
-  updatePagedData() {
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    this.pagedData = this.data.slice(startIndex, startIndex + this.pageSize);
-    this.selectAllChecked = this.pagedData.every(row => this.selectedRows.includes(row));
-  }
+// Update paged data method to consider the filtered data
+updatePagedData(): void {
+  const sourceData = this.searchTerm ? this.filteredData : this.data; // Use filtered data if a search term exists
+  const startIndex = (this.currentPage - 1) * this.pageSize;
+  this.pagedData = sourceData.slice(startIndex, startIndex + this.pageSize);
+  this.selectAllChecked = this.pagedData.every(row => this.selectedRows.includes(row));
+
+}
 
   hasSelectedRows(): boolean {
     return this.selectedRows.length > 0;
@@ -146,9 +162,6 @@ export class DataTableHComponent implements OnChanges {
     }
     this.selectAllChecked = this.pagedData.every(row => this.selectedRows.includes(row));
   }
-  
-
-  
 
   // Sorting logic
   sortColumn(column: string) {
@@ -171,9 +184,13 @@ export class DataTableHComponent implements OnChanges {
     }
   }
 
-  toggleDropdown(rowId: number) {
+  toggleDropdown(row: any) {
+    const rowId = row[this.uniqueKey];
     this.openDropdownRowId = this.openDropdownRowId === rowId ? null : rowId;
+    console.log('Toggled row ID:', this.openDropdownRowId);
   }
+  
+  
 
   // Open the edit modal and set the row to be edited
   openEditModal(row: any) {
@@ -195,4 +212,58 @@ export class DataTableHComponent implements OnChanges {
   }  
 
 
+  // Method to handle input changes in the search box
+  onSearchInputChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.searchTerm = target.value.toLowerCase();
+    this.filterData();
+  }
+  
+  // Method to filter the data based on the search term
+  filterData(): void {
+    if (this.searchTerm) {
+      this.filteredData = this.data.filter(row => {
+        return this.displayedColumns.some(column => {
+          return String(row[column])
+            .toLowerCase()
+            .includes(this.searchTerm);
+        });
+      });
+    } else {
+      // If no search term, reset filteredData to the original data
+      this.filteredData = [...this.data];
+    }
+    this.updatePagedData(); // Call the updated method to reapply page limits
+  }
+
+  // Determine the star class based on rating and star position
+  getStarClass(rating: number, starPosition: number): 'full' | 'half' | 'empty' {
+    const roundedRating = Math.round(rating * 2) / 2; // Round to nearest 0.5
+    if (starPosition <= roundedRating) {
+      return 'full';
+    } else if (starPosition - 0.5 === roundedRating) {
+      return 'half';
+    } else {
+      return 'empty';
+    }
+  }
+
+  // Helper method to get an array of full, half, and empty stars based on the rating
+  getStarArray(rating: number): number[] {
+    const roundedRating = Math.min(Math.round(rating * 2) / 2, 5);
+    const stars = [];
+  
+    for (let i = 1; i <= 5; i++) {
+      if (roundedRating >= i) {
+        stars.push(1); // Full star
+      } else if (roundedRating >= i - 0.5) {
+        stars.push(0.5); // Half star
+      } else {
+        stars.push(0); // Empty star
+      }
+    }
+  
+    return stars;
+  }
+  
 }

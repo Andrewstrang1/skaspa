@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'app-edit-component-h',
   templateUrl: './edit-component-h.component.html',
-  styleUrls: ['./edit-component-h.component.css']
+  styleUrls: ['./edit-component-h.component.css'],
+  
 })
 export class EditComponentHComponent implements OnChanges {
   @Input() rowData: any = {}; // Data to edit

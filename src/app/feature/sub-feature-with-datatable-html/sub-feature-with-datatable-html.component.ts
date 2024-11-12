@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionButton } from '../../shared/data-table-h/data-table-h.component';
+import { DataServicesService } from '../../services/data-services.service';
+
 
 interface TableRow {
   id: number;
   name: string;
   status: string;
   selected?: boolean;
+  rating: number;
 }
 
 @Component({
@@ -14,16 +17,15 @@ interface TableRow {
   styleUrls: ['./sub-feature-with-datatable-html.component.css']
 })
 export class SubFeatureWithDatatableComponentHTML implements OnInit {
-  tableData: TableRow[] = Array.from({ length: 1000}, (_, i) => ({
-    id: i + 1,
-    name: `Item ${i + 1}`,
-    status: ['Active', 'Pending', 'Inactive'][i % 3],
-    selected: false
-  }));
+  constructor(
+    private dataService: DataServicesService
+  ) { }
 
+  tableData: TableRow[] = this.dataService.getSampleData();
   displayedColumns = ['id', 'name', 'status'];
   selectable = true; // Enable checkbox column
   showHamburgerMenu = true; // Show row dropdown menu for actions
+  showRating = true; //Optional column for product rating 
 
   // Define action buttons with custom icons and handlers
   actionButtons: ActionButton[] = [
@@ -75,9 +77,15 @@ export class SubFeatureWithDatatableComponentHTML implements OnInit {
 
   handleSave(updatedRow: TableRow) {
     console.log('Feature component received updated row:', updatedRow);
+    
+    // Update table values
     const index = this.tableData.findIndex(row => row.id === updatedRow.id);
     if (index > -1) {
-      this.tableData[index] = { ...updatedRow };
+        this.tableData[index] = { ...updatedRow };
     }
-  }
+
+    // Update database/api values - initially call dummyPost method to test body submission
+    this.dataService.putSampleData(JSON.stringify(updatedRow));
+}
+
 }

@@ -6,6 +6,8 @@ import { SubFeatureComponent } from './sub-feature/sub-feature.component';
 import { SubFeatureWithDatatableComponent } from './sub-feature-with-datatable/sub-feature-with-datatable.component';
 import { SharedModule } from '../shared/shared.module';
 import { SubFeatureWithDatatableComponentHTML } from './sub-feature-with-datatable-html/sub-feature-with-datatable-html.component';  // Import SharedModule here
+import { ServicesModule } from '../services/services.module';
+import { ApiIntegrationComponent } from './api-integration/api-integration/api-integration.component';
 
 const routes: Routes = [
   {
@@ -15,6 +17,7 @@ const routes: Routes = [
       { path: 'sub-feature', component: SubFeatureComponent },
       { path: 'sub-feature-with-datatable', component: SubFeatureWithDatatableComponent },
       { path: 'sub-feature-with-datatable-html', component: SubFeatureWithDatatableComponentHTML },
+      { path: 'api-integration', component: ApiIntegrationComponent },
       ]
   }
 ];
@@ -24,12 +27,14 @@ const routes: Routes = [
     FeatureComponent,
     SubFeatureComponent,
     SubFeatureWithDatatableComponent,
-    SubFeatureWithDatatableComponentHTML
+    SubFeatureWithDatatableComponentHTML,
+    ApiIntegrationComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule  // Import SharedModule to use DataTableComponent
+    SharedModule,  // Import SharedModule to use DataTableComponent
+    ServicesModule
   ]
 })
 export class FeatureModule {}

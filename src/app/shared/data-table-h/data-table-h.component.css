@@ -8,6 +8,11 @@ table {
 }
 
 /* Header Row */
+
+thead{
+  position: sticky; top: 0
+}
+
 th {
   background-color: #d3d3d3;
   /* Slightly darker gray */
@@ -15,6 +20,8 @@ th {
   font-weight: bold;
   text-align: left;
   border-bottom: 2px solid #b0b0b0;
+
+
   /* Darker border to add contrast */
 }
 
@@ -70,16 +77,70 @@ tbody tr:nth-child(odd) {
   /* White for odd rows */
 }
 
-
+tbody tr:hover { background-color: #f0f8ff; }
 /* Action Buttons */
-.action-buttons {
+.action-buttons-container {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  align-items: flex-start;
   padding: 10px;
   background-color: #e6f7ff;
-  border-radius: 8px;
+}
+  
+
+
+.title-and-search {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
   align-items: center;
-  min-height: 40px;
+}
+
+.table-title {
+  margin: 0;
+  font-size: 1.5rem; /* Adjust size as needed */
+}
+.search-input-container {
+  position: relative;
+  width: 100%;
+}
+.search-box {
+  margin-left: auto;
+  padding-right: 5px;
+  margin-right: 10px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Make sure the icon doesn't block text input */
+}
+
+.search-box .search-input {
+  padding-left: 30px; /* Add padding to make space for the icon */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.record-count {
+  font-size: 14px;
+  color: #333;
+  margin-left: 10px;
+  min-width: 120px; /* Adjust width as needed to handle different digit counts */
+  text-align: right; /* Aligns the text to the right for consistency */
+}
+
+.action-buttons {
+  display: flex;
+  gap: 5px; /* Reduce gap between buttons */
+  margin-bottom: 2px; /* Reduce bottom margin */
+}
+
+.action-buttons-container .search-box {
+  margin-left: auto; /* Pushes the search box to the far right */
+  
 }
 
 .icon-button {
@@ -108,18 +169,6 @@ tbody tr:nth-child(odd) {
   fill: currentColor;
   /* Icon inherits color from the button */
 }
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
 
 
 /* Pagination Controls */
@@ -242,8 +291,8 @@ tbody tr:nth-child(odd) {
   padding: 20px;
   border-radius: 8px;
   width: auto;
-  max-width: 500px;
-  min-width: 300px;
+  /* max-width: 500px;
+  min-width: 300px; */
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   position: relative;
 }
@@ -345,3 +394,81 @@ button.cancel-btn {
 .dropdown-menu button:hover {
   background-color: #f5f5f5;
 }
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #333;
+}
+
+.loading-spinner .spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #333;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 16px;
+  color: #666;
+  padding: 20px;
+}
+
+/* Rating column display*/
+
+.rating-column {
+  /* display: flex; */
+  align-items: center;
+  padding: 4px 8px;
+  border-bottom: 1px solid #e0e0e0; /* Ensure border consistency */
+  /*width: 100%;  Ensure it takes the full cell width */
+  box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.star {
+  width: 16px;
+  height: 16px;
+  fill: none;
+}
+
+.star-full {
+  fill: #FFD700; /* Full gold color for filled stars */
+}
+
+.star-empty {
+  fill: #ddd; /* Gray color for empty stars */
+}
+
+.star-half {
+  fill: url(#halfGradient); /* Use the defined gradient for half stars */
+}
+
+.review-count {
+  font-size: 13px;
+  color: #555;
+  margin-left: 6px;
+}
+
+
+
+
+
+

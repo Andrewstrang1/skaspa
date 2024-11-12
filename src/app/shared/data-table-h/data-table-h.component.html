@@ -1,101 +1,155 @@
-<div class="action-buttons">
-  <ng-container *ngIf="hasSelectedRows()">
-    <ng-container *ngFor="let button of actionButtons">
-      <button *ngIf="button.location === 'actionBar' || button.location === 'both'" (click)="triggerAction(button)"
-        [attr.aria-label]="button.label" class="icon-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-          <path [attr.d]="button.iconPath"></path>
+<!-- Inline SVG gradient for half fill -->
+<svg width="0" height="0">
+  <defs>
+    <linearGradient id="halfGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="50%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#ddd;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- Loading Spinner -->
+<div *ngIf="loading" class="loading-spinner">
+  <div class="spinner"></div>
+  <span>Loading data...</span>
+</div>
+<div *ngIf="!loading">
+<div class="action-buttons-container">
+  <!-- Title and Search Box on the Same Row -->
+  <div class="title-and-search">
+    <!-- Table Title -->
+    <h3 *ngIf="tableTitle" class="table-title">{{ tableTitle }}</h3>
+    <!-- Autocomplete Search Box -->
+    <div class="search-box">
+      <div class="search-input-container">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="search-icon"
+          viewBox="0 0 16 16">
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
         </svg>
-        {{ button.label }}
+        <input type="text" placeholder="" class="search-input" (input)="onSearchInputChange($event)" />
+      </div>
+    </div>
+    <div class="record-count" *ngIf="data.length > 0">
+      {{ searchTerm ? filteredData.length : data.length }} records found
+    </div>
+  </div>
+  <div *ngIf="!loading">
+    <!-- Action Buttons on a Separate Row -->
+    <div class="action-buttons-row" *ngIf="hasSelectedRows()">
+      <ng-container *ngFor="let button of actionButtons">
+        <button *ngIf="button.location === 'actionBar' || button.location === 'both'" (click)="triggerAction(button)"
+          [attr.aria-label]="button.label" class="icon-button">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path [attr.d]="button.iconPath"></path>
+          </svg>
+          {{ button.label }}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</div>
+  <div class="data-table">
+    <table *ngIf="pagedData.length > 0; else emptyState">
+      <thead>
+        <tr>
+          <th *ngIf="selectable" class="checkbox-column">
+            <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="selectAllChecked" />
+          </th>
+          <th *ngFor="let column of displayedColumns" (click)="sortColumn(column)">
+            {{ column | titlecase }}
+            <span *ngIf="sortedColumn === column">
+              <span *ngIf="sortDirection === 'asc'">&#9650;</span> <!-- Up arrow for ascending -->
+              <span *ngIf="sortDirection === 'desc'">&#9660;</span> <!-- Down arrow for descending -->
+            </span>
+          </th>
+          <th *ngIf="showRating">Rating</th>
+          <th *ngIf="showHamburgerMenu"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of pagedData">
+          <td *ngIf="selectable" class="checkbox-column">
+            <input type="checkbox" (change)="toggleRowSelection(row, $event)" [checked]="selectedRows.includes(row)" />
+          </td>
+          <td *ngFor="let column of displayedColumns">{{ row[column] }}</td>
+          
+          <!-- Rating Column -->
+          <td *ngIf="showRating" class="rating-column">
+            <div class="star-rating">
+              <ng-container *ngFor="let star of getStarArray(row.rating)">
+                <svg class="star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path [ngClass]="{
+                    'star-full': star === 1,
+                    'star-half': star === 0.5,
+                    'star-empty': star === 0
+                  }" d="M12 .587l3.668 7.568L24 9.75l-6 5.915L19.335 24 12 19.988 4.665 24 6 15.665 0 9.75l8.332-1.595L12 .587z"/>
+                </svg>
+              </ng-container>
+              <span class="review-count" tooltip="number of reviews">({{ row.reviewCount }})</span>
+            </div>
+          </td> 
+
+          <!-- Row dropdown menu with edit and delete -->
+          <td *ngIf="showHamburgerMenu" class="dropdown-column">
+            <button (click)="toggleDropdown(row)" class="hamburger-button">&#8942;</button>
+            <div *ngIf="openDropdownRowId === row[uniqueKey]" class="dropdown-menu">
+              <ng-container *ngFor="let button of actionButtons">
+                <button *ngIf="button.location === 'row' || button.location === 'both'"
+                  (click)="triggerAction(button, row)">
+                  {{ button.label }}
+                </button>
+              </ng-container>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination with Rows per Page Selector -->
+    <div class="pagination">
+      <button (click)="changePage(1)" [disabled]="currentPage === 1" title="First Page">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M4 12l8-8v16zM20 4h-2v16h2z" fill="currentColor" />
+        </svg>
       </button>
-    </ng-container>
-  </ng-container>
-</div>
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" title="Previous Page">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M15 19l-7-7 7-7" fill="currentColor" />
+        </svg>
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= totalPages" title="Next Page">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M9 5l7 7-7 7" fill="currentColor" />
+        </svg>
+      </button>
+      <button (click)="changePage(totalPages)" [disabled]="currentPage >= totalPages" title="Last Page">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M20 12l-8 8v-16zM4 4h2v16h-2z" fill="currentColor" />
+        </svg>
+      </button>
 
+      <div class="page-size-selector">
+        <label for="goToPage">Go to page:</label>
+        <select id="goToPage" (change)="goToPage($event)" [value]="currentPage">
+          <option *ngFor="let page of totalPagesArray" [value]="page" [selected]="page === currentPage">{{ page }}
+          </option>
+        </select>
+      </div>
 
-<div class="data-table">
-  <table>
-    <thead>
-      <tr>
-        <th *ngIf="selectable" class="checkbox-column">
-          <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="selectAllChecked" />
-        </th>
-        <th *ngFor="let column of displayedColumns" (click)="sortColumn(column)">
-          {{ column | titlecase }}
-          <span *ngIf="sortedColumn === column">
-            <span *ngIf="sortDirection === 'asc'">&#9650;</span> <!-- Up arrow for ascending -->
-            <span *ngIf="sortDirection === 'desc'">&#9660;</span> <!-- Down arrow for descending -->
-          </span>
-        </th>
-        <th *ngIf="showHamburgerMenu"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let row of pagedData">
-        <td *ngIf="selectable" class="checkbox-column">
-          <input type="checkbox" (change)="toggleRowSelection(row, $event)" [checked]="selectedRows.includes(row)" />
-        </td>
-        <td *ngFor="let column of displayedColumns">{{ row[column] }}</td>
-        <!-- Row dropdown menu with edit and delete -->
-        <td *ngIf="showHamburgerMenu" class="dropdown-column">
-          <button (click)="toggleDropdown(row.id)" class="hamburger-button">&#8942;</button>
-          <div *ngIf="openDropdownRowId === row.id" class="dropdown-menu">
-            <ng-container *ngFor="let button of actionButtons">
-              <button *ngIf="button.location === 'row' || button.location === 'both'"
-                (click)="triggerAction(button, row)">
-                {{ button.label }}
-              </button>
-            </ng-container>
-          </div>
-        </td>
-
-
-      </tr>
-    </tbody>
-  </table>
-
- <!-- Pagination with Rows per Page Selector -->
- <div class="pagination">
-  <button (click)="changePage(1)" [disabled]="currentPage === 1" title="First Page">
-    <svg width="16" height="16" viewBox="0 0 24 24">
-      <path d="M4 12l8-8v16zM20 4h-2v16h2z" fill="currentColor" />
-    </svg>
-  </button>
-  <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" title="Previous Page">
-    <svg width="16" height="16" viewBox="0 0 24 24">
-      <path d="M15 19l-7-7 7-7" fill="currentColor" />
-    </svg>
-  </button>
-  <span>Page {{ currentPage }} of {{ totalPages }}</span>
-  <button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= totalPages" title="Next Page">
-    <svg width="16" height="16" viewBox="0 0 24 24">
-      <path d="M9 5l7 7-7 7" fill="currentColor" />
-    </svg>
-  </button>
-  <button (click)="changePage(totalPages)" [disabled]="currentPage >= totalPages" title="Last Page">
-    <svg width="16" height="16" viewBox="0 0 24 24">
-      <path d="M20 12l-8 8v-16zM4 4h2v16h-2z" fill="currentColor" />
-    </svg>
-  </button>
-
-  <div class="page-size-selector">
-    <label for="goToPage">Go to page:</label>
-    <select id="goToPage" (change)="goToPage($event)" [value]="currentPage">
-      <option *ngFor="let page of totalPagesArray" [value]="page" [selected]="page === currentPage">{{ page }}
-      </option>
-    </select>
-  </div>
-
-  <div class="page-size-selector">
-    <label for="pageSize">Rows per page:</label>
-    <select id="pageSize" (change)="changePageSize($event)" [value]="pageSize">
-      <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === pageSize">{{ size }}</option>
-    </select>
+      <div class="page-size-selector">
+        <label for="pageSize">Rows per page:</label>
+        <select id="pageSize" (change)="changePageSize($event)" [value]="pageSize">
+          <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === pageSize">{{ size }}</option>
+        </select>
+      </div>
+    </div>
   </div>
 </div>
-</div>
-
-
+<ng-template #emptyState>
+  <div class="empty-message">No records found</div>
+</ng-template>
 <!-- Edit Modal -->
 <div *ngIf="editingRow" class="modal">
   <div class="modal-content">
@@ -115,6 +169,3 @@
     <button (click)="closeModal()">Cancel</button>
   </div>
 </div>
-
-
-
