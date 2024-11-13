@@ -1,0 +1,25 @@
+<svg width="0" height="0">
+    <defs>
+      <linearGradient id="halfGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="50%" style="stop-color:#FFD700;stop-opacity:1" />
+        <stop offset="50%" style="stop-color:#ddd;stop-opacity:1" />
+      </linearGradient>
+    </defs>
+  </svg>
+  
+<div class="star-rating">
+    <ng-container *ngFor="let star of getStarArray(rating)">
+      <svg class="star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path
+          [ngClass]="{
+            'star-full': star === 1,
+            'star-half': star === 0.5,
+            'star-empty': star === 0
+          }"
+          d="M12 .587l3.668 7.568L24 9.75l-6 5.915L19.335 24 12 19.988 4.665 24 6 15.665 0 9.75l8.332-1.595L12 .587z"
+        />
+      </svg>
+    </ng-container>
+    <span class="review-count">({{ reviewCount }} reviews)</span>
+  </div>
+  

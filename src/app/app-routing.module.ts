@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent }, // Default route
+  { path: 'home', component: HomeComponent },
+  // Add other routes here
   { path: 'feature', loadChildren: () => import('./feature/feature.module').then(m => m.FeatureModule) },
-  { path: '', redirectTo: '/feature', pathMatch: 'full' }
+  { path: '**', redirectTo: '' } // Redirect any unknown routes to home
 ];
 
 @NgModule({

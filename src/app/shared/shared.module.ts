@@ -17,13 +17,16 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 // Non-Material Components
 import { DataTableHComponent } from './data-table-h/data-table-h.component';
 import { EditComponentHComponent } from './edit-component-h/edit-component-h.component';
+import { StarRatingComponent } from './star-rating/star-rating.component';
+
 
 @NgModule({
   declarations: [
     DataTableComponent,       // Material component
     EditDialogComponent,      // Material component
     DataTableHComponent,      // Non-Material component
-    EditComponentHComponent   // Non-Material component
+    EditComponentHComponent, StarRatingComponent
+
   ],
   imports: [
     CommonModule,

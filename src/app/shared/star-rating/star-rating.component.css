@@ -1,0 +1,32 @@
+  .star-rating {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    gap: 4px;
+    margin-top: 0px; /* Adjust as necessary */
+  }
+  
+  .star {
+    width: 16px;
+    height: 16px;
+    fill: none;
+  }
+  
+  .star-full {
+    fill: #FFD700; /* Gold color */
+  }
+  
+  .star-half {
+    fill: url(#halfGradient); /* SVG gradient for half-filled */
+  }
+  
+  .star-empty {
+    fill: #ddd; /* Light gray for empty stars */
+  }
+  
+  .review-count {
+    font-size: 0.9em;
+    color: #555;
+    margin-left: 5px;
+  }
+  

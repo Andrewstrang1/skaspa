@@ -7,12 +7,16 @@ import { FeatureModule } from './feature/feature.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServicesModule } from './services/services.module';
 import { ApiIntegrationComponent } from './features/api-integration/api-integration/api-integration.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     ApiIntegrationComponent,
+    SidebarComponent, NavbarComponent, HomeComponent   // Non-Material component
   ],
   imports: [
     BrowserModule,

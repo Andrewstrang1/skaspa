@@ -429,42 +429,11 @@ button.cancel-btn {
 /* Rating column display*/
 
 .rating-column {
-  /* display: flex; */
-  align-items: center;
-  padding: 4px 8px;
-  border-bottom: 1px solid #e0e0e0; /* Ensure border consistency */
-  /*width: 100%;  Ensure it takes the full cell width */
-  box-sizing: border-box; /* Include padding in width calculation */
-}
-
-.star-rating {
   display: flex;
   align-items: center;
-  gap: 4px;
-}
-
-.star {
-  width: 16px;
-  height: 16px;
-  fill: none;
-}
-
-.star-full {
-  fill: #FFD700; /* Full gold color for filled stars */
-}
-
-.star-empty {
-  fill: #ddd; /* Gray color for empty stars */
-}
-
-.star-half {
-  fill: url(#halfGradient); /* Use the defined gradient for half stars */
-}
-
-.review-count {
-  font-size: 13px;
-  color: #555;
-  margin-left: 6px;
+  border-bottom: 1px solid #e0e0e0; /* Ensure border consistency */
+  box-sizing: border-box; /* Include padding in width calculation */
+  vertical-align: middle;
 }
 
 
