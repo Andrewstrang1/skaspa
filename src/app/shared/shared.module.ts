@@ -44,7 +44,8 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
     DataTableComponent,       // Material component
     EditDialogComponent,      // Material component
     DataTableHComponent,      // Non-Material component
-    EditComponentHComponent   // Non-Material component
+    EditComponentHComponent,   // Non-Material component
+    StarRatingComponent
   ],
   entryComponents: [EditDialogComponent]  // Required for Angular Material dialog
 })

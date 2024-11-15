@@ -1,5 +1,103 @@
 <div class="home-container">
-    <h1>Welcome to My Application</h1>
+    <h1>Welcome to the Application Builder</h1>
     <p>This is the home page where you can find an overview of features and get started.</p>
   </div>
+  <h1>Component Guide</h1>
+
+  <h2>1. DataTableH Component</h2>
+  <p>The <strong>DataTableH</strong> component is a versatile and dynamic data table that supports:</p>
+  <ul>
+    <li>Sorting and pagination</li>
+    <li>Selectable rows with bulk actions</li>
+    <li>Custom action buttons configured in the parent feature</li>
+    <li>Optional columns, like ratings or custom fields</li>
+    <li>Search and filter capabilities</li>
+  </ul>
+  
+  <h3>Usage in a Feature Page</h3>
+  <p>To use <strong>DataTableH</strong> in a feature component:</p>
+  <ol>
+    <li>Import the <code>DataTableHComponent</code> and include it in your feature’s HTML.</li>
+    <li>Define the data structure with an interface (e.g., <code>TableRow</code>) for column names and types.</li>
+    <li>Configure component inputs like <code>data</code>, <code>displayedColumns</code>, <code>actionButtons</code>, and <code>tableTitle</code>.</li>
+    <li>Add methods for handling actions, such as editing or deleting rows.</li>
+  </ol>
+  
+  <h3>Example</h3>
+  <pre><code>&lt;app-data-table-h
+    [data]="tableData"
+    [displayedColumns]="displayedColumns"
+    [selectable]="selectable"
+    [actionButtons]="actionButtons"
+    [showRating]="true"
+    [tableTitle]="'Product Table'"
+    (save)="handleSave($event)"
+  &gt;&lt;/app-data-table-h&gt;
+  </code></pre>
+  
+  <h3>Customizing Columns</h3>
+  <ul>
+    <li><strong>Dynamic Columns:</strong> Control displayed columns with <code>displayedColumns</code> in the feature component.</li>
+    <li><strong>Rating Column:</strong> Add a rating column by setting <code>[showRating]="true"</code>.</li>
+  </ul>
+  
+  <h3>Configuring Actions</h3>
+  <p>Define custom actions for row-level or bulk actions via <code>actionButtons</code>. Each button can open a modal, perform inline actions, or require confirmation:</p>
+  
+  <pre><code>actionButtons: ActionButton[] = [
+    {{ '{' }}
+      label: 'Edit',
+      iconPath: 'M3 12l18 12-18 12',
+      handler: (row) => this.editRow(row),
+      location: 'row',
+      modal: true,
+      emitOnSave: true
+    {{ '}' }},
+    {{ '{' }}
+      label: 'Delete Selected',
+      iconPath: 'M3 6h18v2H3V6zM3 10h18v10H3V10z',
+      handler: (_, selectedRows) => this.deleteSelectedRows(selectedRows),
+      location: 'actionBar',
+      requiresSelection: true,
+      requiresConfirmation: true
+      {{ '}' }}
+  ];
+  </code></pre>
+  
+  <h2>2. StarRating Component</h2>
+  <p>The <strong>StarRating</strong> component visually displays ratings with an optional review count and an <strong>interactive mode</strong> for user input.</p>
+  
+  <h3>Usage in a Feature Page</h3>
+  <ol>
+    <li>Import and include <code>StarRatingComponent</code> in the feature component’s HTML where the rating should appear.</li>
+    <li>Bind <code>rating</code> to display or capture the value, and set <code>[interactive]</code> to enable click-based rating.</li>
+  </ol>
+  
+  <h3>Example</h3>
+  <pre><code>&lt;app-star-rating 
+    [(rating)]="userRating"
+    [interactive]="true"
+    [reviewCount]="100"
+  &gt;&lt;/app-star-rating&gt;
+  </code></pre>
+  
+  <h3>Interactive Ratings and Submitting a Review</h3>
+  <ul>
+    <li>With <code>interactive</code> enabled, users click stars to set a rating, which emits a value to the feature for processing.</li>
+    <li>Combine with a <code>textarea</code> to capture additional review details.</li>
+  </ul>
+  
+  <h3>Example with Review Submission</h3>
+  <pre><code>&lt;app-star-rating [(rating)]="userRating" [interactive]="true"&gt;&lt;/app-star-rating&gt;
+  &lt;textarea [(ngModel)]="userReview" placeholder="Write your review..."&gt;&lt;/textarea&gt;
+  &lt;button (click)="submitReview()"&gt;Submit Review&lt;/button&gt;
+  </code></pre>
+  
+  <pre><code>submitReview() {{ '{' }}
+    console.log("User's Rating:", this.userRating);
+    console.log("User's Review:", this.userReview);
+  {{ '}' }}
+  </code></pre>
+  
+  <p>These components are designed to be <strong>reusable and configurable</strong> for different feature pages. By following these guidelines, you can easily configure <strong>DataTableH</strong> and <strong>StarRating</strong> for your specific feature needs.</p>
   

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input , Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-star-rating',
@@ -7,19 +7,47 @@ import { Component, Input } from '@angular/core';
 })
 export class StarRatingComponent {
   @Input() rating: number = 0;         // Input for star rating value
-  @Input() reviewCount: number = 0;     // Input for review count
+  @Input() reviewCount?: number;     // Input for review count
+  @Input() interactive: boolean = false; // Enable interaction
+  @Output() ratingChange = new EventEmitter<number>(); // Emit new rating to parent
 
-  // Method to generate the star array based on the rating
-  getStarArray(rating: number): number[] {
-    const roundedRating = Math.round(rating * 2) / 2; // Round to nearest 0.5
+  // Holds the rating displayed visually on hover or when set
+  hoveredRating: number | null = null;
+  
+  // Function to generate an array for star filling
+  getStarArray(): number[] {
+    const displayRating = this.hoveredRating ?? this.rating;
+    const roundedRating = Math.round(displayRating * 2) / 2;
     const fullStars = Math.floor(roundedRating);
-    const halfStar = roundedRating % 1 ? 0.5 : 0;
-    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+    const halfStar = roundedRating % 1 === 0.5 ? 1 : 0;
+    const emptyStars = 5 - fullStars - halfStar;
 
     return [
-      ...Array(fullStars).fill(1),     // Full stars
-      ...Array(halfStar ? 1 : 0).fill(0.5), // Half star if applicable
-      ...Array(emptyStars).fill(0)     // Empty stars
+      ...Array(fullStars).fill(1),
+      ...Array(halfStar).fill(0.5),
+      ...Array(emptyStars).fill(0)
     ];
+  }
+
+  // Handle click to set a new rating
+  setRating(newRating: number) {
+    if (this.interactive) {
+      this.rating = newRating;
+      this.ratingChange.emit(newRating); // Emit new rating
+    }
+  }
+
+  // Handle hover for visual feedback
+  onHover(newRating: number) {
+    if (this.interactive) {
+      this.hoveredRating = newRating;
+    }
+  }
+
+  // Reset hover effect
+  onLeave() {
+    if (this.interactive) {
+      this.hoveredRating = null;
+    }
   }
 }

@@ -7,7 +7,8 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   // Add other routes here
   { path: 'feature', loadChildren: () => import('./feature/feature.module').then(m => m.FeatureModule) },
-  { path: '**', redirectTo: '' } // Redirect any unknown routes to home
+  { path: '**', redirectTo: 'home' } // Redirect any unknown routes to home
+  
 ];
 
 @NgModule({

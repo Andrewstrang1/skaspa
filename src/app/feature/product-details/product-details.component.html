@@ -1,0 +1,38 @@
+<div class="product-details-container">
+    <h2 class="product-title">Product Details</h2>
+  
+    <!-- Product Information Section -->
+    <div class="product-info">
+      <h3>{{ product?.ProductName }}</h3>
+      <p><strong>Price:</strong> ${{ product?.UnitPrice }}</p>
+      <p><strong>Stock:</strong> {{ product?.UnitsInStock }} units available</p>
+    </div>
+  
+    <!-- Star Rating Section -->
+    <div class="review-section">
+      <h3>Rate this Product</h3>
+      <app-star-rating
+        [(rating)]="userRating"
+        (ratingChange)="onRatingChange($event)"
+        [interactive]="true"
+      ></app-star-rating>
+  
+      <!-- Review Text Entry -->
+      <h3>Your Review</h3>
+      <textarea
+        [(ngModel)]="reviewText"
+        placeholder="Write your review here..."
+        rows="4"
+        class="review-textbox"
+      ></textarea>
+  
+      <!-- Submit Button -->
+      <button (click)="submitReview()" class="submit-button">Submit Review</button>
+      <button (click)="goBack()" class="cancel-btn">Back to Product List</button>
+    </div>
+  </div>
+  
+
+
+
+  
