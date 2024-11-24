@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnChanges, Renderer2  } from '@angular/core';
 
-
 export interface ActionButton {
   label: string;
   iconPath: string;
@@ -13,13 +12,14 @@ export interface ActionButton {
 }
 
 @Component({
-  selector: 'app-data-table-h',
-  templateUrl: './data-table-h.component.html',
+  selector: 'app-data-tiles-h',
+  templateUrl: './data-tiles-h.component.html',
   styleUrls: ['../shared-styles/data-table-h.component.css', '../shared-styles/data-table-h-purple-theme.css', 
     '../shared-styles/data-table-h-green-theme.css', '../shared-styles/data-table-h-blue-theme.css'
   ], 
 })
-export class DataTableHComponent implements OnChanges {
+
+export class DataTilesHComponent implements OnChanges {
   @Input() data: any[] = [];
   @Input() displayedColumns: string[] = [];
   @Input() selectable: boolean = false;
@@ -28,7 +28,6 @@ export class DataTableHComponent implements OnChanges {
   @Input() uniqueKey: string = 'id'; // Default to 'id'
   @Input() tableTitle: string = ''; // New property for the table title
   @Input() showRating: boolean = false;
-  @Input() showTiles: boolean = false;
   @Input() themeClass: string = '';
 
 
@@ -39,7 +38,7 @@ export class DataTableHComponent implements OnChanges {
 
   pagedData: any[] = [];
   pageSizeOptions = [5, 10, 15, 25, 50, 100];
-  pageSize = 15;
+  pageSize = 5;
   currentPage = 1;
   selectAllChecked = false;
   openDropdownRowId: number | null = null;

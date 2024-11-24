@@ -3,6 +3,7 @@ import { ActionButton } from '../../shared/data-table-h/data-table-h.component';
 import { DataServicesService } from '../../services/data-services.service';
 
 
+
 interface TableRow {
   id: number;
   name: string;
@@ -26,6 +27,8 @@ export class SubFeatureWithDatatableComponentHTML implements OnInit {
   selectable = true; // Enable checkbox column
   showHamburgerMenu = true; // Show row dropdown menu for actions
   showRating = true; //Optional column for product rating 
+  selectedTheme = 'purple-theme'; // Default theme
+  showTiles = false;
 
   // Define action buttons with custom icons and handlers
   actionButtons: ActionButton[] = [
@@ -54,6 +57,23 @@ export class SubFeatureWithDatatableComponentHTML implements OnInit {
   ];
 
   ngOnInit(): void { }
+
+  changeTheme(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedTheme = selectElement.value;
+    console.log ('Theme changed to: ', this.selectedTheme)
+  }
+
+  changeTileView(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    if (selectElement.value == 'true'){
+      this.showTiles = true;
+    } else { 
+      this.showTiles = false
+    }
+    console.log ('Tile View changed: ',selectElement.value)
+  }
+
 
   // Edit single row from the row dropdown
   editRow(row: TableRow) {

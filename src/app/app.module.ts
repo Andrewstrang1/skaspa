@@ -10,21 +10,23 @@ import { ApiIntegrationComponent } from './features/api-integration/api-integrat
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
-
+import { FormsModule } from '@angular/forms';
+import { MusicModule } from './music/music.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     ApiIntegrationComponent,
-    SidebarComponent, NavbarComponent, HomeComponent   // Non-Material component
+    SidebarComponent, NavbarComponent, HomeComponent  // Non-Material component
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FeatureModule,
+    FeatureModule, MusicModule,
     BrowserAnimationsModule,
-    ServicesModule
+    ServicesModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

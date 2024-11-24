@@ -1,0 +1,29 @@
+<div *ngIf="loading" class="spinner">
+    <p>Loading...</p>
+  </div>
+  <div *ngIf="!loading && results.length === 0" class="no-results">
+    <p>No results found.</p>
+  </div>
+  <div *ngIf="!loading && results.length > 0" class="results-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Artist</th>
+          <th>Title</th>
+          <th>Catalog Number</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of results" (click)="viewDetails(result)">
+          <td>{{ result.artist }}</td>
+          <td>{{ result.title }}</td>
+          <td>{{ result.catalogNumber }}</td>
+          <td><button (click)="viewDetails(result)">Details</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  

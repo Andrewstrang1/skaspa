@@ -18,6 +18,7 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { DataTableHComponent } from './data-table-h/data-table-h.component';
 import { EditComponentHComponent } from './edit-component-h/edit-component-h.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
+import { DataTilesHComponent } from './data-tiles-h/data-tiles-h.component';
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
     DataTableComponent,       // Material component
     EditDialogComponent,      // Material component
     DataTableHComponent,      // Non-Material component
-    EditComponentHComponent, StarRatingComponent
+    EditComponentHComponent, StarRatingComponent, DataTilesHComponent
 
   ],
   imports: [
@@ -44,6 +45,7 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
     DataTableComponent,       // Material component
     EditDialogComponent,      // Material component
     DataTableHComponent,      // Non-Material component
+    DataTilesHComponent,      // Tiled table
     EditComponentHComponent,   // Non-Material component
     StarRatingComponent
   ],

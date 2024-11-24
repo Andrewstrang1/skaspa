@@ -1,0 +1,145 @@
+/* Green-Themed Classes */
+
+/* Background Color for Table */
+.datatable-container.green-theme {
+  background-color: #1a3d1a; /* Deep green background */
+  color: white; /* Ensure text is readable on dark background */
+}
+
+/* Header Row */
+.datatable-container.green-theme thead th {
+  background-color: #2e562e; /* Darker green for header */
+  color: white;
+  border-bottom: 2px solid #3a693a; /* Slightly lighter green for contrast */
+}
+
+/* Body Rows - Alternate Colors */
+.datatable-container.green-theme tbody tr:nth-child(even) {
+  background-color: #264a26; /* Light green for even rows */
+}
+
+.datatable-container.green-theme tbody tr:nth-child(odd) {
+  background-color: #1e3d1e; /* Slightly darker green for odd rows */
+}
+
+.datatable-container.green-theme tbody tr:hover {
+  background-color: #3a693a; /* Hover effect with lighter green */
+}
+
+/* Pagination Controls */
+.datatable-container.green-theme .pagination {
+  background-color: #264a26; /* Green background for pagination */
+  border-radius: 8px;
+  color: white;
+}
+
+.datatable-container.green-theme .pagination button {
+  background-color: #3a693a; /* Lighter green for buttons */
+  color: white;
+  border: 1px solid #2e562e;
+}
+
+.datatable-container.green-theme .pagination button:hover {
+  background-color: #4a7d4a; /* Slightly lighter green on hover */
+}
+
+.datatable-container.green-theme .pagination button:disabled {
+  background-color: #1e3d1e; /* Disabled button with subdued color */
+  color: #8fa88f; /* Faded text for disabled state */
+}
+
+/* Action Buttons Container */
+.datatable-container.green-theme .action-buttons-container {
+  background-color: #264a26; /* Green background for action buttons */
+  color: white;
+  border-radius: 6px;
+}
+
+.datatable-container.green-theme .action-buttons-container .icon-button {
+  color: #b3e6b3; /* Light green for icons */
+}
+
+.datatable-container.green-theme .action-buttons-container .icon-button:hover {
+  color: #e5ffe5; /* Even lighter green on hover */
+}
+
+/* Search Box */
+.datatable-container.green-theme .search-box .search-input {
+  background-color: #2e562e; /* Green background */
+  color: white;
+  border: 1px solid #3a693a;
+}
+
+.datatable-container.green-theme .search-box .search-input::placeholder {
+  color: #b3e6b3; /* Placeholder text in light green */
+}
+
+.datatable-container.green-theme .search-box .search-input:focus {
+  border-color: #e5ffe5; /* Focus effect with lighter green */
+  outline: none;
+  box-shadow: 0 0 5px #4a7d4a; /* Green glow */
+}
+
+.datatable-container.green-theme .search-icon {
+  color: #b3e6b3; /* Light green for search icon */
+}
+
+/* Record Count */
+.datatable-container.green-theme .record-count {
+  color: #b3e6b3; /* Light green text for record count */
+}
+
+/* Edit Modal Styling for Green Theme */
+.modal-content.green-theme {
+  background-color: #2e562e; /* Match green theme */
+  color: white; /* Ensure text is visible on dark background */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content.green-theme label {
+  color: #e5ffe5; /* Light green for labels */
+  font-weight: bold;
+}
+
+.modal-content.green-theme input[type="text"],
+.modal-content.green-theme input[type="number"],
+.modal-content.green-theme select,
+.modal-content.green-theme textarea {
+  background-color: #1a3d1a; /* Dark green for input background */
+  color: white; /* White text for input */
+  border: 1px solid #3a693a; /* Slightly lighter border */
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 14px;
+  width: 100%;
+}
+
+.modal-content.green-theme button.save-btn {
+  background-color: #3a693a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-content.green-theme button.save-btn:hover {
+  background-color: #4a7d4a; /* Lighter hover effect */
+}
+
+.modal-content.green-theme button.cancel-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-content.green-theme button.cancel-btn:hover {
+  background-color: #e53935; /* Slightly darker hover */
+}

@@ -1,0 +1,45 @@
+/* Search form container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  /* Search form styling */
+  .search-form {
+    background-color: #503775; /* Subtle lighter purple shade */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    width: 80%;
+    max-width: 500px;
+  }
+  
+  .search-form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  
+  .search-form label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: white;
+  }
+  
+  .search-form input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    outline: none;
+    color: black;
+    background-color: #685493; /* Even lighter purple shade */
+  }
+  
+  .search-form input::placeholder {
+    color: #aaa;
+  }
+  

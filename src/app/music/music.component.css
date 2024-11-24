@@ -1,0 +1,44 @@
+/* Set the whole page background color */
+:host {
+    display: block;
+    background-color: #38145c;
+    height: 100vh; /* Full viewport height */
+    color: #ffffff; /* Optional: make text white for better contrast */
+    /* padding: 20px; */
+    box-sizing: border-box;
+    margin-top: -20px;
+    margin-left: -20px;
+    margin-right: -20px;
+  }
+  
+  /* Overall page styling */
+.music-banner {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  margin-bottom: 20px;
+}
+
+.banner-image {
+  max-width: 100%;
+  height: auto;
+}
+
+
+.search-button {
+  background-color: #3f2872; /* Darker purple */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: #2d1c54; /* Even darker purple for hover */
+}
+
+  

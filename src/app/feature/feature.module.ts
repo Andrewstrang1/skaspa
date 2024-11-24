@@ -10,7 +10,8 @@ import { SubFeatureWithDatatableComponentHTML } from './sub-feature-with-datatab
 import { ServicesModule } from '../services/services.module';
 import { ApiIntegrationComponent } from './api-integration/api-integration.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { MusicComponent } from './music/music.component';
+import { SubFeatureTileViewComponent } from './sub-feature-tile-view/sub-feature-tile-view.component';
+
 
 const routes: Routes = [
   {
@@ -21,8 +22,9 @@ const routes: Routes = [
       { path: 'sub-feature-with-datatable', component: SubFeatureWithDatatableComponent },
       { path: 'sub-feature-with-datatable-html', component: SubFeatureWithDatatableComponentHTML },
       { path: 'api-integration', component: ApiIntegrationComponent },
+      { path: 'app-sub-feature-tile-view', component: SubFeatureTileViewComponent },
       { path: 'product-details/:id', component: ProductDetailsComponent },
-      { path: 'music', component: MusicComponent },  // Add this line
+
 
       ]
   }
@@ -35,7 +37,8 @@ const routes: Routes = [
     SubFeatureWithDatatableComponent,
     SubFeatureWithDatatableComponentHTML,
     ApiIntegrationComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    SubFeatureTileViewComponent
   ],
   imports: [
     CommonModule,

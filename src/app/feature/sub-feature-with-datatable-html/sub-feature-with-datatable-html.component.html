@@ -1,4 +1,25 @@
 <h2>Feature Component with Data Table</h2>
+
+<!-- Theme Selection Dropdown -->
+<div style="margin-bottom: 10px;">
+  <label for="theme-select">Select Theme:</label>
+  <select style="width:100px" id="theme-select" [(ngModel)]="selectedTheme" (change)="changeTheme($event)">
+    <option value="">Default</option>
+    <option value="purple-theme">Purple</option>
+    <option value="blue-theme">Blue</option>
+    <option value="green-theme">Green</option>
+  </select>
+</div>
+
+<!-- Theme Selection Dropdown -->
+<div style="margin-bottom: 10px;">
+  <label for="theme-select">Select Table or Tile View:</label>
+  <select style="width:100px" id="theme-select" [(ngModel)]="showTiles" (change)="changeTileView($event)">
+    <option value="false">Table View</option>
+    <option value="true">Tile View</option>
+  </select>
+</div>
+
 <app-data-table-h
   [data]="tableData"
   [displayedColumns]="displayedColumns"
@@ -7,5 +28,7 @@
   [showHamburgerMenu]="showHamburgerMenu"
   [showRating]="showRating"
   [tableTitle]="'Sample Data Table'" 
-  (save)="handleSave($event)">
+  (save)="handleSave($event)"
+  [themeClass]="selectedTheme"
+  [showTiles]="showTiles">
 </app-data-table-h>

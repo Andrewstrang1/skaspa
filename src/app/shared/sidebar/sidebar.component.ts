@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class SidebarComponent {
   featureLinks = [
     { label: 'Datatable Examples', path: '/feature' },
-    { label: 'Music', path: '/feature/music' },
+    { label: 'Music', path: '/music' },
     { label: 'Feature 3', path: '/feature3' },
     // Add more links as needed
   ];
