@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SearchCriteriaService } from '../music/services/search-criteria.service';
+import { SearchCriteriaService } from './search-criteria.service';
 
 describe('SearchCriteriaService', () => {
   let service: SearchCriteriaService;

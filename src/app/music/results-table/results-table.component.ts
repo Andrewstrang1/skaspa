@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { DiscogsService } from '../services/discogs.service';
 import { SearchCriteriaService } from '../services/search-criteria.service';
-import { ActionButton } from '../../shared/data-table-h/data-table-h.component';
-import { DataServicesService } from '../../services/data-services.service';
+import { Album } from '../models/album.model';
 
 @Component({
   selector: 'app-results-table',
@@ -10,52 +10,44 @@ import { DataServicesService } from '../../services/data-services.service';
   styleUrls: ['./results-table.component.css'],
 })
 export class ResultsTableComponent implements OnInit {
-  searchCriteria: any = {}; // To store search criteria
-  results: any[] = []; // To store search results
-  loading: boolean = false; // For showing a spinner during data fetch
+  searchCriteria: any;
+  results: Album[] = [];
+  loading: boolean = false;
 
   constructor(
-    private router: Router,
+    private discogsService: DiscogsService,
     private searchCriteriaService: SearchCriteriaService,
-    private dataService: DataServicesService
+    private router: Router
   ) {}
 
-  tableData: any[] = this.dataService.getSampleData();
-  displayedColumns = ['id', 'name', 'status'];
-  selectable = false; // Enable checkbox column
-  showHamburgerMenu = false; // Show row dropdown menu for actions
-  showRating = true; //Optional column for product rating 
-
- 
-
   ngOnInit(): void {
-    // Fetch the search criteria from the shared service
-    this.searchCriteria = this.searchCriteriaService.getSearchCriteria();
-
-    if (this.searchCriteria) {
+    this.searchCriteriaService.searchCriteria$.subscribe((criteria) => {
+      this.searchCriteria = criteria;
       this.fetchResults();
-    } else {
-      console.error('No search criteria provided!');
-      this.results = []; // Clear results if no criteria
-    }
+    });
   }
 
   fetchResults() {
-    this.loading = true;
-    console.log('Fetching results for:', this.searchCriteria);
+    if (!this.searchCriteria) return;
 
-    // Simulate a data fetch with a timeout
-    setTimeout(() => {
-      this.results = [
-        { artist: this.searchCriteria.artist, title: 'Title A', catalogNumber: '001' },
-        { artist: 'Artist B', title: 'Title B', catalogNumber: '002' },
-      ];
-      this.loading = false;
-    }, 1500);
+    this.loading = true;
+    this.discogsService
+      .searchAlbum(this.searchCriteria.artist, this.searchCriteria.title)
+      .subscribe({
+        next: (results) => {
+          this.results = results;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Error fetching results:', err);
+          this.loading = false;
+        },
+      });
   }
 
-  viewDetails(row: any) {
-    console.log('Navigating to details for row:', row);
-    this.router.navigate(['music/details', row.catalogNumber]);
+  viewDetails(album: Album) {
+    this.router.navigate(['music/details', album.catalogNumber], {
+      state: { album },
+    });
   }
 }

@@ -1,1 +1,17 @@
-<p>details-table works!</p>
+<table>
+    <thead>
+      <tr>
+        <th>Track Number</th>
+        <th>Title</th>
+        <th>Duration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let track of album?.tracks">
+        <td>{{ track.trackNumber }}</td>
+        <td>{{ track.title }}</td>
+        <td>{{ formatDuration(track.duration) }}</td>
+      </tr>
+    </tbody>
+  </table>
+  

@@ -1,3 +1,4 @@
+// search.form.component.ts
 import { Component, EventEmitter, Output } from '@angular/core';
 import { SearchCriteriaService } from '../services/search-criteria.service';
 
