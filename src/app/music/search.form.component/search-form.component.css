@@ -1,45 +1,77 @@
-/* Search form container */
+/* Styling for the search container */
 .search-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  /* Search form styling */
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+}
+
+/* Styling for the search panel */
+.search-panel {
+  background-color: #6a4895; /* Lighter purple background */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
+  width: fit-content; /* Adjust width to fit the form */
+  border: 1px solid #5a3d83; /* Slightly darker border for purple theme */
+}
+
+/* Styling for the search form */
+.search-form {
+  display: flex;
+  align-items: flex-end; /* Align the button with input fields */
+  gap: 20px; /* Spacing between form groups */
+  flex-wrap: wrap; /* Allows wrapping for smaller screens */
+}
+
+/* Styling for each form group */
+.form-group {
+  display: flex;
+  flex-direction: column; /* Ensures label is above input */
+  width: 200px; /* Adjust width as needed */
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: white; /* White labels for contrast */
+}
+
+.form-group input {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  font-size: 14px;
+}
+
+/* Styling for the search button */
+.search-button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #957dcc; /* Purple button color */
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 40px; /* Ensures alignment with input fields */
+  line-height: normal; /* Prevents button text from appearing misaligned */
+}
+
+.search-button:hover {
+  background-color: #7b68b3; /* Slightly darker shade on hover */
+}
+
+@media (max-width: 768px) {
   .search-form {
-    background-color: #503775; /* Subtle lighter purple shade */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: white;
-    width: 80%;
-    max-width: 500px;
+    flex-direction: column; /* Stack form groups on smaller screens */
+    align-items: flex-start; /* Align left for smaller screens */
   }
-  
-  .search-form .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 15px;
+
+  .form-group {
+    width: 100%; /* Full-width inputs on smaller screens */
   }
-  
-  .search-form label {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: white;
+
+  .search-button {
+    width: 100%; /* Full-width button on smaller screens */
   }
-  
-  .search-form input {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 14px;
-    outline: none;
-    color: black;
-    background-color: #685493; /* Even lighter purple shade */
-  }
-  
-  .search-form input::placeholder {
-    color: #aaa;
-  }
-  
+}

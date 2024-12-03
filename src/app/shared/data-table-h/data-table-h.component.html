@@ -50,6 +50,7 @@
         </div>
       </div>
     </div>
+    <!-- Main table type -->
     <div class="data-table" *ngIf="!showTiles">
       <table *ngIf="pagedData.length > 0; else emptyState">
         <thead>
@@ -98,27 +99,41 @@
           </tr>
         </tbody>
       </table>
-      <!-- Tiled Display -->
-      <div class="tiled-container" *ngIf="showTiles">
-        <div class="tile" *ngFor="let row of pagedData; let i = index">
-          <div class="tile-content">
-            <img [src]="row.image" alt="{{ row.name }}" class="tile-image" />
-            <div class="tile-details">
-              <h4>{{ row.name }}</h4>
-              <p>{{ row.description }}</p>
-              <div class="tile-rating">
-                <app-star-rating [rating]="row.rating" [interactive]="false"></app-star-rating>
-                <span>({{ row.reviewCount }} reviews)</span>
-              </div>
-              <p class="tile-price">{{ row.price | currency }}</p>
-              <div *ngIf="selectable" class="tile-checkbox">
-                <input type="checkbox" (change)="toggleRowSelection(row, $event)"
-                  [checked]="selectedRows.includes(row)" />
-              </div>
+    </div>
+     <!-- Tile View -->
+     <div class="tiled-container" *ngIf="showTiles">
+      <div class="tile" *ngFor="let row of pagedData">
+        <div class="tile-content">
+          <!--  Row Image -->
+          <img [src]="row.image || 'assets/default-image.png'" alt="{{ row.name }}" class="tile-image" />
+    
+          <!-- Tile Details -->
+          <div class="tile-details">
+            <!-- Display Dynamic Data Based on Columns -->
+            <h4>{{ row.name }}</h4>
+            <div *ngFor="let column of displayedColumns" class="tile-column">
+              <strong>{{ column | titlecase }}:</strong> {{ row[column] }}
+            </div>
+    
+            <!-- Action Buttons -->
+            <div class="tile-actions">
+              <ng-container *ngFor="let button of actionButtons">
+                <button
+                  class="tile-action-button"
+                  [attr.aria-label]="button.label"
+                  (click)="triggerAction(button, row)">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                    <path [attr.d]="button.iconPath"></path>
+                  </svg>
+                  {{ button.label }}
+                </button>
+              </ng-container>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    
       <!-- Pagination with Rows per Page Selector -->
       <div class="pagination">
         <button (click)="changePage(1)" [disabled]="currentPage === 1" title="First Page">
@@ -185,4 +200,3 @@
       <button (click)="closeModal()">Cancel</button>
     </div>
   </div>
-</div>

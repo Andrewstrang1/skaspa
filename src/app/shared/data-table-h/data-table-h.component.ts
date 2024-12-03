@@ -5,7 +5,7 @@ export interface ActionButton {
   label: string;
   iconPath: string;
   handler: (row?: any, selectedRows?: any[]) => void;
-  location: 'row' | 'actionBar' | 'both';
+  location: 'row' | 'actionBar' | 'tile' | 'both';
   modal?: boolean;
   emitOnSave?: boolean;
   requiresSelection?: boolean;
@@ -30,8 +30,10 @@ export class DataTableHComponent implements OnChanges {
   @Input() showRating: boolean = false;
   @Input() showTiles: boolean = false;
   @Input() themeClass: string = '';
-
-
+  @Input() pageLength: number = 10; // Default page length
+  @Input() currentPage: number = 1; // Track the current page
+  @Input() pageSize: number = 5; // Default number of rows per page
+ 
   @Output() save = new EventEmitter<any>();  // Emit saved data to feature component
   @Output() edit = new EventEmitter<any>();
 
@@ -39,8 +41,6 @@ export class DataTableHComponent implements OnChanges {
 
   pagedData: any[] = [];
   pageSizeOptions = [5, 10, 15, 25, 50, 100];
-  pageSize = 15;
-  currentPage = 1;
   selectAllChecked = false;
   openDropdownRowId: number | null = null;
   confirmingAction: { button: ActionButton; row: any } | null = null; // For confirmation modal

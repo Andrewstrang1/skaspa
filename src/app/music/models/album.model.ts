@@ -3,6 +3,7 @@ export interface Album {
   artist: string;
   catalogNumber: string;
   artworkUrl: string;
+  image: string;
   tracks: Track[];
   duration: number; // Total duration in seconds
   mediaAvailable: boolean;

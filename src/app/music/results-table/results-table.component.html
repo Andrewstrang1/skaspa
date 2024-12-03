@@ -3,12 +3,16 @@
   <span>Loading...</span>
 </div>
 
-<app-data-tiles-music
+<app-data-table-h
   [data]="results"
+  [displayedColumns]="['artist',' title', 'catalogNumber', 'genre', 'year']"
+  [showTiles]="true"
   [themeClass]="'purple-theme'"
-  [tableTitle]="'Search Results'"
-  (viewDetails)="viewDetails($event)">
-</app-data-tiles-music>
+  [actionButtons]="actionButtons"
+  [tableTitle] = "title"
+  [pageSize]="5">
+</app-data-table-h>
+
 
 
 <div *ngIf="!loading && results.length === 0">

@@ -14,8 +14,6 @@ const routes: Routes = [
       path: '',
       component: MusicComponent,
       children: [
-        { path: '', redirectTo: 'search', pathMatch: 'full' }, // Default to search
-        { path: 'search', component: SearchFormComponent },
         { path: 'results', component: ResultsTableComponent },
         { path: 'details/:id', component: DetailsTableComponent },
       ],

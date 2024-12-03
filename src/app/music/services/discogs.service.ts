@@ -11,7 +11,7 @@ import { Album, Track } from '../models/album.model';
 export class DiscogsService {
   private discogsConfig = Discogs[0];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Search for albums by artist and title
   searchAlbum(artist: string, album: string): Observable<Album[]> {
@@ -37,17 +37,24 @@ export class DiscogsService {
 
   // Map Discogs search results to Album model
   private mapDiscogsToAlbums(results: any[]): Album[] {
-    return results.map((result) => ({
-      title: result.title,
-      artist: result.artist,
-      catalogNumber: result.catno,
-      artworkUrl: result.cover_image,
-      tracks: [], // Detailed tracks can be fetched later
-      duration: 0, // Placeholder for now
-      mediaAvailable: false,
-      saved: false,
-    }));
+    return results.map((result) => {
+      const [artist, ...titleParts] = result.title.split(' - '); // Split on ' - '
+      return {
+        title: titleParts.join(' - ') || result.title || 'Unknown Title', // Join remaining parts for the title
+        artist: artist || 'Unknown Artist', // First part becomes the artist
+        catalogNumber: result.catno || 'N/A', // Handle undefined catalog number
+        artworkUrl: result.cover_image || 'assets/default-album-art.png', // Use default if no image
+        image: result.cover_image || 'assets/default-album-art.png', // Use default if no image
+        tracks: [], // Detailed tracks can be fetched later
+        duration: 0, // Placeholder for now
+        mediaAvailable: false,
+        saved: false,
+      };
+    });
   }
+  
+  
+
 
   // Map Discogs album details to Album model
   private mapDiscogsToAlbumDetails(details: any): Album {
@@ -56,6 +63,7 @@ export class DiscogsService {
       artist: details.artists[0]?.name || '',
       catalogNumber: details.labels[0]?.catno || '',
       artworkUrl: details.images?.[0]?.uri || '',
+      image: details.images?.[0]?.uri || '',
       tracks: details.tracklist.map((track: any): Track => ({
         title: track.title,
         duration: this.convertDuration(track.duration),

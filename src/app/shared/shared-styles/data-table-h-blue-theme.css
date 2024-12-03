@@ -143,3 +143,33 @@
 .modal-content.blue-theme button.cancel-btn:hover {
   background-color: #e53935; /* Slightly darker hover */
 }
+
+/* Tiled Display Container - Blue Theme */
+.tiled-container.blue-theme {
+  background-color: #e6f0fa; /* Light blue background */
+}
+
+/* Individual Tile */
+.tile.blue-theme {
+  border: 1px solid #d1e3f6;
+  background-color: #ffffff; /* White tiles */
+}
+
+.tile.blue-theme:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(30, 144, 255, 0.3); /* Blue glow on hover */
+}
+
+/* Tile Details */
+.tile-details.blue-theme h4 {
+  color: #1a73e8; /* Bright blue for title */
+}
+
+.tile-details.blue-theme p {
+  color: #2d4a7f; /* Darker blue for text */
+}
+
+.tile-details.blue-theme .tile-price {
+  color: #0073e6; /* Highlighted price color */
+}
+

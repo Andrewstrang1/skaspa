@@ -46,7 +46,7 @@
           <img [src]="album.artworkUrl" alt="{{ album.title }}" class="tile-image" />
           <div class="music-tile-details">
             <h4>{{ album.title }}</h4>
-            <p><strong>Artist:</strong> {{ album.title }}</p>
+            <p><strong>Artist:</strong> {{ album.artist}}</p>
             <p><strong>Catalog:</strong> {{ album.catalogNumber }}</p>
             <div class="tile-actions">
               <button class="action-button" (click)="viewAlbumDetails(album)">View Details</button>
