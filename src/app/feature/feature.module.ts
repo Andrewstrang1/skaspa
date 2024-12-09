@@ -11,6 +11,7 @@ import { ServicesModule } from '../services/services.module';
 import { ApiIntegrationComponent } from './api-integration/api-integration.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { SubFeatureTileViewComponent } from './sub-feature-tile-view/sub-feature-tile-view.component';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const routes: Routes = [
@@ -44,7 +45,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,  // Import SharedModule to use DataTableComponent
-    ServicesModule, FormsModule
+    ServicesModule, FormsModule,
+    NgbCarouselModule
   ]
 })
 export class FeatureModule {}

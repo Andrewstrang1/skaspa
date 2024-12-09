@@ -6,7 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sub-feature.component.css']
 })
 export class SubFeatureComponent implements OnInit {
-
+  images = [
+    { url: 'https://via.placeholder.com/600x400', type: 'Front Cover' },
+    { url: 'https://via.placeholder.com/600x400', type: 'Back Cover' },
+    { url: 'https://via.placeholder.com/600x400', type: 'insode Cover' },
+  ];
+  
   constructor() { }
 
   ngOnInit(): void {

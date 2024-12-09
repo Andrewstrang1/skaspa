@@ -15,11 +15,11 @@
     <span>Loading data...</span>
   </div>
   <div *ngIf="!loading">
-    <div class="action-buttons-container">
+    <div class="action-buttons-container" *ngIf="showHeaderFooter">
       <!-- Title and Search Box on the Same Row -->
-      <div class="title-and-search">
+      <div class="title-and-search" >
         <!-- Table Title -->
-        <h3 *ngIf="tableTitle" class="table-title">{{ tableTitle }}</h3>
+        <h3 *ngIf="tableTitle" class="table-title">{{ tableTitle | titlecase }}</h3>
         <!-- Autocomplete Search Box -->
         <div class="search-box">
           <div class="search-input-container">
@@ -59,7 +59,7 @@
               <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="selectAllChecked" />
             </th>
             <th *ngFor="let column of displayedColumns" (click)="sortColumn(column)">
-              {{ column | titlecase }}
+              {{ column | splitCamelCase |  titlecase }}
               <span *ngIf="sortedColumn === column">
                 <span *ngIf="sortDirection === 'asc'">&#9650;</span> <!-- Up arrow for ascending -->
                 <span *ngIf="sortDirection === 'desc'">&#9660;</span> <!-- Down arrow for descending -->
@@ -100,103 +100,106 @@
         </tbody>
       </table>
     </div>
-     <!-- Tile View -->
-     <div class="tiled-container" *ngIf="showTiles">
-      <div class="tile" *ngFor="let row of pagedData">
-        <div class="tile-content">
-          <!--  Row Image -->
-          <img [src]="row.image || 'assets/default-image.png'" alt="{{ row.name }}" class="tile-image" />
-    
-          <!-- Tile Details -->
-          <div class="tile-details">
-            <!-- Display Dynamic Data Based on Columns -->
-            <h4>{{ row.name }}</h4>
-            <div *ngFor="let column of displayedColumns" class="tile-column">
-              <strong>{{ column | titlecase }}:</strong> {{ row[column] }}
-            </div>
-    
-            <!-- Action Buttons -->
-            <div class="tile-actions">
-              <ng-container *ngFor="let button of actionButtons">
-                <button
-                  class="tile-action-button"
-                  [attr.aria-label]="button.label"
-                  (click)="triggerAction(button, row)">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-                    <path [attr.d]="button.iconPath"></path>
-                  </svg>
-                  {{ button.label }}
-                </button>
-              </ng-container>
-            </div>
+   <!-- Tile View -->
+   <div class="tiled-container" *ngIf="showTiles">
+    <div class="tile" *ngFor="let row of pagedData">
+      <div class="tile-content">
+        <!--  Row Image -->
+        <img [src]="row.image" alt="{{ row.title }}" class="tile-image"
+          (click)="triggerAction(actionButtons[0], row)" />
+
+        <!-- Tile Details -->
+        <div class="tile-details">
+          <!-- Display Dynamic Data Based on Columns -->
+          <h4>{{ row.title }}</h4>
+          <div *ngFor="let column of displayedColumns">
+            <strong>{{ column | splitCamelCase | titlecase }}: </strong>
+            <span class="highlight-text">{{ row[column] }}</span>
+          </div>
+          
+
+          <!-- Action Buttons -->
+          <div class="tile-actions" *ngIf="selectable">
+            <ng-container *ngFor="let button of actionButtons">
+              <button class="tile-action-button" [attr.aria-label]="button.label"
+                (click)="triggerAction(button, row)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"
+                  fill="currentColor">
+                  <path [attr.d]="button.iconPath"></path>
+                </svg>
+                {{ button.label }}
+              </button>
+            </ng-container>
           </div>
         </div>
       </div>
     </div>
-    
-      <!-- Pagination with Rows per Page Selector -->
-      <div class="pagination">
-        <button (click)="changePage(1)" [disabled]="currentPage === 1" title="First Page">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path d="M4 12l8-8v16zM20 4h-2v16h2z" fill="currentColor" />
-          </svg>
-        </button>
-        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" title="Previous Page">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path d="M15 19l-7-7 7-7" fill="currentColor" />
-          </svg>
-        </button>
-        <span>Page {{ currentPage }} of {{ totalPages }}</span>
-        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= totalPages" title="Next Page">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path d="M9 5l7 7-7 7" fill="currentColor" />
-          </svg>
-        </button>
-        <button (click)="changePage(totalPages)" [disabled]="currentPage >= totalPages" title="Last Page">
-          <svg width="16" height="16" viewBox="0 0 24 24">
-            <path d="M20 12l-8 8v-16zM4 4h2v16h-2z" fill="currentColor" />
-          </svg>
-        </button>
+  </div>
+    <!-- Pagination with Rows per Page Selector -->
+    <div class="pagination" *ngIf="showHeaderFooter">
+      <button (click)="changePage(1)" [disabled]="currentPage === 1" title="First Page">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M4 12l8-8v16zM20 4h-2v16h2z" fill="currentColor" />
+        </svg>
+      </button>
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" title="Previous Page">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M15 19l-7-7 7-7" fill="currentColor" />
+        </svg>
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage >= totalPages" title="Next Page">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M9 5l7 7-7 7" fill="currentColor" />
+        </svg>
+      </button>
+      <button (click)="changePage(totalPages)" [disabled]="currentPage >= totalPages" title="Last Page">
+        <svg width="16" height="16" viewBox="0 0 24 24">
+          <path d="M20 12l-8 8v-16zM4 4h2v16h-2z" fill="currentColor" />
+        </svg>
+      </button>
 
-        <div class="page-size-selector">
-          <span>Go to page:</span>
-          <select id="goToPage" (change)="goToPage($event)" [value]="currentPage">
-            <option *ngFor="let page of totalPagesArray" [value]="page" [selected]="page === currentPage">{{ page }}
-            </option>
-          </select>
-        </div>
+      <div class="page-size-selector">
+        <span>Go to page:</span>
+        <select id="goToPage" (change)="goToPage($event)" [value]="currentPage">
+          <option *ngFor="let page of totalPagesArray" [value]="page" [selected]="page === currentPage">{{ page }}
+          </option>
+        </select>
+      </div>
 
-        <div class="page-size-selector">
-          <span>Rows per page:</span>
-          <select id="pageSize" (change)="changePageSize($event)" [value]="pageSize">
-            <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === pageSize">{{ size }}
-            </option>
-          </select>
-        </div>
+      <div class="page-size-selector">
+        <span>Rows per page:</span>
+        <select id="pageSize" (change)="changePageSize($event)" [value]="pageSize">
+          <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === pageSize">{{ size }}
+          </option>
+        </select>
+      </div>
+      <div class="record-count" *ngIf="data.length > 0 && showTiles">
+        {{ searchTerm ? filteredData.length : data.length }} records found
       </div>
     </div>
   </div>
-  <ng-template #emptyState>
-    <div class="empty-message">No records found</div>
-  </ng-template>
+</div>
+<ng-template #emptyState>
+  <div class="empty-message">No records found</div>
+</ng-template>
 
-
-  <!-- Edit Modal -->
-  <div *ngIf="editingRow" class="modal">
-    <div class="modal-content" [ngClass]="themeClass">
-      <span class="close" (click)="closeModal()">&times;</span>
-      <app-edit-component-h [rowData]="editingRow" (save)="saveData($event)" (cancel)="closeModal()">
-      </app-edit-component-h>
-    </div>
+<!-- Edit Modal -->
+<div *ngIf="editingRow" class="modal">
+  <div class="modal-content" [ngClass]="themeClass">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <app-edit-component-h [rowData]="editingRow" (save)="saveData($event)" (cancel)="closeModal()">
+    </app-edit-component-h>
   </div>
+</div>
 
-  <!-- Confirmation Modal -->
-  <div *ngIf="confirmingAction" class="modal">
-    <div class="modal-content" [ngClass]="themeClass">
-      <span class="close" (click)="closeModal()">&times;</span>
-      <h3>Confirm Action</h3>
-      <p>Are you sure you want to {{ confirmingAction.button.label }}?</p>
-      <button (click)="confirmAction()">Yes, Confirm</button>
-      <button (click)="closeModal()">Cancel</button>
-    </div>
+<!-- Confirmation Modal -->
+<div *ngIf="confirmingAction" class="modal">
+  <div class="modal-content" [ngClass]="themeClass">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h3>Confirm Action</h3>
+    <p>Are you sure you want to {{ confirmingAction.button.label }}?</p>
+    <button (click)="confirmAction()">Yes, Confirm</button>
+    <button (click)="closeModal()">Cancel</button>
   </div>
+</div>

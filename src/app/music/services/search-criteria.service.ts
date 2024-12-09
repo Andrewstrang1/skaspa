@@ -9,12 +9,10 @@ export class SearchCriteriaService {
   searchCriteria$ = this.searchCriteriaSubject.asObservable();
 
   setSearchCriteria(criteria: any): void {
-    console.log ('Service received data:', criteria)
     this.searchCriteriaSubject.next(criteria);
   }
 
   getSearchCriteria(): any {
-    console.log ('fetching from service')
     return this.searchCriteriaSubject.getValue();
   }
 }

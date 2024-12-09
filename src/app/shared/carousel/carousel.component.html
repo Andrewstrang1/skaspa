@@ -1,0 +1,20 @@
+<div [ngClass]="['carousel-container', themeClass]" *ngIf="images?.length; else noImages">
+    <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" [interval]="3000">
+      <ng-template ngbSlide *ngFor="let image of images">
+
+            <img [src]="image.url" alt="Album Image" class="carousel-image" />
+
+        <div class="carousel-caption">
+          <p>{{ image.type || 'Additional Image' }}</p>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+  
+  <ng-template #noImages>
+    <div [ngClass]="['carousel-placeholder', themeClass]">No images available</div>
+  </ng-template>
+
+
+
+  

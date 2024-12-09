@@ -16,16 +16,19 @@ export class ResultsTableComponent implements OnInit {
   results: Album[] = [];
   loading: boolean = false;
   title: string = '';
-
+  displayedColumns= ['cat', 'genre', 'releaseID', 'year', 'country', 'label'];
+  
   actionButtons: ActionButton[] = [
     {
       label: 'View Details',
-      iconPath: 'M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z', // SVG path for an icon
-      location: 'tile', // Action is specific to tile or both
-      handler: (row: any) => this.viewDetails(row), // Function to execute
+      iconPath: '', // SVG path for an icon
+      location: 'row', // Action is specific to tile or both
+      handler: (row: any) => {
+        console.log('View Details:', row);
+        this.viewDetails(row); // Custom method
+      },
     }
-  ];
-  
+  ]; 
 
   constructor(
     private discogsService: DiscogsService,
@@ -36,11 +39,11 @@ export class ResultsTableComponent implements OnInit {
   ngOnInit(): void {
     this.searchCriteriaService.searchCriteria$.subscribe((criteria) => {
       this.searchCriteria = criteria;
-      this.fetchResults();
+      this.fetchResultsfromDiscogs();
     });
   }
 
-  fetchResults() {
+  fetchResultsfromDiscogs() {
     if (!this.searchCriteria) return;
 
     this.loading = true;
@@ -49,6 +52,7 @@ export class ResultsTableComponent implements OnInit {
       .subscribe({
         next: (results) => {
           this.results = results;
+          console.log ('Mapped results:', results)
           this.title = 'Results for ' + this.searchCriteria.artist + ' ' + this.searchCriteria.title
           this.loading = false;
         },
@@ -60,7 +64,8 @@ export class ResultsTableComponent implements OnInit {
   }
 
   viewDetails(album: Album) {
-    this.router.navigate(['music/details', album.catalogNumber], {
+    console.log ('ReleaseID: ', album.releaseID );
+    this.router.navigate(['music/details', album.releaseID], {
       state: { album },
     });
   }

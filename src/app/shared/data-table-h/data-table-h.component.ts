@@ -1,11 +1,10 @@
 import { Component, Input, Output, EventEmitter, OnChanges, Renderer2  } from '@angular/core';
 
-
 export interface ActionButton {
   label: string;
   iconPath: string;
   handler: (row?: any, selectedRows?: any[]) => void;
-  location: 'row' | 'actionBar' | 'tile' | 'both';
+  location: 'row' | 'actionBar' | 'tile' | 'both' | 'image';
   modal?: boolean;
   emitOnSave?: boolean;
   requiresSelection?: boolean;
@@ -26,14 +25,15 @@ export class DataTableHComponent implements OnChanges {
   @Input() actionButtons: ActionButton[] = [];
   @Input() showHamburgerMenu: boolean = false;
   @Input() uniqueKey: string = 'id'; // Default to 'id'
-  @Input() tableTitle: string = ''; // New property for the table title
+  @Input() tableTitle: string = ''; 
   @Input() showRating: boolean = false;
   @Input() showTiles: boolean = false;
   @Input() themeClass: string = '';
   @Input() pageLength: number = 10; // Default page length
   @Input() currentPage: number = 1; // Track the current page
-  @Input() pageSize: number = 5; // Default number of rows per page
- 
+  @Input() pageSize: number = 15; // Default number of rows per page
+  @Input() showHeaderFooter: boolean = true;
+  
   @Output() save = new EventEmitter<any>();  // Emit saved data to feature component
   @Output() edit = new EventEmitter<any>();
 
@@ -58,8 +58,7 @@ export class DataTableHComponent implements OnChanges {
   ngOnChanges() {
     this.setLoading(true); // Start loading when data changes
     this.updatePagedData();
-    this.setLoading(false); // Stop loading once data is updated
-    
+    this.setLoading(false); // Stop loading once data is updated    
   }
 
   // Handle action with optional confirmation
@@ -101,8 +100,7 @@ export class DataTableHComponent implements OnChanges {
   closeModal() {
     this.editingRow = null;
     this.confirmingAction = null; // Close confirmation modal if open
-  }
-  
+  }  
 
   get totalPages(): number {
     const sourceData = this.searchTerm ? this.filteredData : this.data;

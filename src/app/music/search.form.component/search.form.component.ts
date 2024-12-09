@@ -11,7 +11,7 @@ export class SearchFormComponent {
   searchCriteria = {
     artist: '',
     title: '',
-    catalogNumber: '',
+    cat: '',
   };
 
   constructor(private searchCriteriaService: SearchCriteriaService) {}
@@ -27,7 +27,5 @@ export class SearchFormComponent {
     // Emit search event for parent listeners
     this.search.emit(this.searchCriteria);
 
-    // Optionally navigate directly to the results page from here
-    // this.router.navigate(['music/results']);
   }
 }

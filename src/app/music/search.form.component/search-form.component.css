@@ -11,7 +11,8 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
-  width: fit-content; /* Adjust width to fit the form */
+  width: 100%; /* Make the panel take up full width */
+  max-width: 600px; /* Optional: Limit the maximum width */
   border: 1px solid #5a3d83; /* Slightly darker border for purple theme */
 }
 
@@ -19,21 +20,15 @@
 .search-form {
   display: flex;
   align-items: flex-end; /* Align the button with input fields */
-  gap: 20px; /* Spacing between form groups */
-  flex-wrap: wrap; /* Allows wrapping for smaller screens */
+  gap: 10px; /* Spacing between form groups */
+  flex: 1; /* Ensures full width for the form */
 }
 
 /* Styling for each form group */
 .form-group {
   display: flex;
   flex-direction: column; /* Ensures label is above input */
-  width: 200px; /* Adjust width as needed */
-}
-
-.form-group label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: white; /* White labels for contrast */
+  flex-grow: 1; /* Makes the input expand to fill remaining space */
 }
 
 .form-group input {
@@ -41,6 +36,13 @@
   border-radius: 4px;
   border: 1px solid #ced4da;
   font-size: 14px;
+  width: 95%; /* Ensures input respects the form-group width */
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: white; /* White labels for contrast */
 }
 
 /* Styling for the search button */
@@ -53,8 +55,9 @@
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  height: 40px; /* Ensures alignment with input fields */
+  height: 34px; /* Ensures alignment with input fields */
   line-height: normal; /* Prevents button text from appearing misaligned */
+  flex-shrink: 0; /* Prevents the button from shrinking */
 }
 
 .search-button:hover {

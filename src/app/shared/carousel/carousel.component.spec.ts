@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataTilesHComponent } from './data-tiles-h.component';
+import { CarouselComponent } from './carousel.component';
 
-describe('DataTilesHComponent', () => {
-  let component: DataTilesHComponent;
-  let fixture: ComponentFixture<DataTilesHComponent>;
+describe('CarouselComponent', () => {
+  let component: CarouselComponent;
+  let fixture: ComponentFixture<CarouselComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DataTilesHComponent ]
+      declarations: [ CarouselComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DataTilesHComponent);
+    fixture = TestBed.createComponent(CarouselComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

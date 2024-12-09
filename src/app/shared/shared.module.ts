@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Angular Material Modules
 import { MatTableModule } from '@angular/material/table';
@@ -18,8 +20,11 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import { DataTableHComponent } from './data-table-h/data-table-h.component';
 import { EditComponentHComponent } from './edit-component-h/edit-component-h.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
-import { DataTilesHComponent } from './data-tiles-h/data-tiles-h.component';
-import { DataTilesMusicComponent } from './data-tiles-music/data-tiles-music.component';
+
+// Pipes and services
+
+import { SplitCamelCasePipe } from '../pipes/splitCamelCase.pipe';
+import { CarouselComponent } from './carousel/carousel.component';
 
 
 @NgModule({
@@ -27,7 +32,9 @@ import { DataTilesMusicComponent } from './data-tiles-music/data-tiles-music.com
     DataTableComponent,       // Material component
     EditDialogComponent,      // Material component
     DataTableHComponent,      // Non-Material component
-    EditComponentHComponent, StarRatingComponent, DataTilesHComponent, DataTilesMusicComponent
+    EditComponentHComponent, StarRatingComponent,
+    SplitCamelCasePipe,
+    CarouselComponent
 
   ],
   imports: [
@@ -40,16 +47,18 @@ import { DataTilesMusicComponent } from './data-tiles-music/data-tiles-music.com
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    NgbModule, NgbCarouselModule
   ],
   exports: [
     DataTableComponent,       // Material component
     EditDialogComponent,      // Material component
     DataTableHComponent,      // Non-Material component
-    DataTilesHComponent,      // Tiled table
     EditComponentHComponent,   // Non-Material component
     StarRatingComponent,
-    DataTilesMusicComponent
+    SplitCamelCasePipe,
+    CarouselComponent
+    
   ],
   entryComponents: [EditDialogComponent]  // Required for Angular Material dialog
 })

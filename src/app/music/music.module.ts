@@ -5,9 +5,11 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule
 import { MusicComponent } from './music.component';
 import { SearchFormComponent } from './search.form.component/search.form.component';
 import { ResultsTableComponent } from './results-table/results-table.component';
-import { DetailsTableComponent } from './details-table/details-table.component';
+import { DetailsComponent } from './details-table/details.component';
 import { ServicesModule } from '../services/services.module';
 import { SharedModule } from '../shared/shared.module';
+
+
 
 const routes: Routes = [
     {
@@ -15,7 +17,7 @@ const routes: Routes = [
       component: MusicComponent,
       children: [
         { path: 'results', component: ResultsTableComponent },
-        { path: 'details/:id', component: DetailsTableComponent },
+        { path: 'details/:id', component: DetailsComponent },
       ],
     },
   ];
@@ -24,7 +26,7 @@ const routes: Routes = [
   declarations: [
     SearchFormComponent,
     ResultsTableComponent,
-    DetailsTableComponent,
+    DetailsComponent,
     MusicComponent,
   ],
   imports: [
@@ -32,7 +34,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ServicesModule,
     FormsModule,
-    SharedModule
-  ],
+    SharedModule  ],
 })
 export class MusicModule {}

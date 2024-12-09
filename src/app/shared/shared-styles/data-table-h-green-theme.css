@@ -144,32 +144,12 @@
   background-color: #e53935; /* Slightly darker hover */
 }
 
-/* Tiled Display Container - Green Theme */
-.tiled-container.green-theme {
-  background-color: #e9f5e6; /* Light green background */
+:root {
+  --tile-background-color: #1b5e20; /* Deep green background */
+  --tile-border-color: #43a047; /* Medium green border */
+  --tile-text-color: #e8f5e9; /* Light green text */
+  --tile-title-color: #ffffff; /* White for titles */
+  --highlight-text-color: #A2FF9E; /* Light green for green theme */
 }
 
-/* Individual Tile */
-.tile.green-theme {
-  border: 1px solid #cde7cc;
-  background-color: #ffffff; /* White tiles */
-}
-
-.tile.green-theme:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(50, 205, 50, 0.3); /* Green glow on hover */
-}
-
-/* Tile Details */
-.tile-details.green-theme h4 {
-  color: #28a745; /* Bright green for title */
-}
-
-.tile-details.green-theme p {
-  color: #2f553f; /* Darker green for text */
-}
-
-.tile-details.green-theme .tile-price {
-  color: #218838; /* Highlighted price color */
-}
 

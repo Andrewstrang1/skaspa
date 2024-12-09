@@ -436,24 +436,23 @@ button.cancel-btn {
   vertical-align: middle;
 }
 
+
 /* Tiled Display Container */
 .tiled-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Dynamic column layout */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Dynamic columns */
   gap: 20px;
   padding: 20px;
-  background-color: #f9f9f9; /* Background color for tiles */
+  background-color: var(--tile-background-color); /* Use theme variable */
 }
 
 /* Individual Tile */
+/* Tile Styling */
 .tile {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: var(--tile-background-color); /* Dynamically set by theme */
+  border: 1px solid var(--tile-border-color); /* Dynamically set by theme */
+  border-radius: 0 0 8px 8px; /* Rounded corners only on bottom */
+  padding: 10px; /* Slightly increased padding */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -462,68 +461,35 @@ button.cancel-btn {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* Tile Content */
-.tile-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 15px;
-}
-
-/* Tile Image */
+/* Image Styling */
 .tile-image {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-bottom: 1px solid #ddd;
+  border-top-left-radius: 0; /* Ensure no top corners rounded */
+  border-top-right-radius: 0;
+  max-height: 240px; /* Reduced image size */
+  object-fit: cover; /* Prevent cropping distortion */
+  cursor: pointer; /* Change cursor to pointer when hovering */
 }
 
 /* Tile Details */
 .tile-details {
-  padding: 10px;
-  text-align: center;
+  color: var(--tile-text-color); /* Dynamically set by theme */
+  text-align: left; /* Align text to the left */
 }
 
 .tile-details h4 {
-  font-size: 1.2rem;
+  color: var(--tile-title-color); /* Dynamically set by theme */
   font-weight: bold;
-  margin-bottom: 5px;
-  color: #333;
 }
 
 .tile-details p {
   font-size: 0.9rem;
-  color: #555;
   margin: 5px 0;
+  color: var(--tile-text-color);
 }
 
-.tile-details .tile-price {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #1a73e8; /* Highlight color for price */
+.highlight-text {
+  color: var(--highlight-text-color, #FFD700);
+  /* font-weight: bold; Optional for emphasis */
 }
-
-/* Tile Rating */
-.tile-rating {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-}
-
-/* Checkbox Styling */
-.tile-checkbox {
-  margin-top: 10px;
-}
-
-.tile-checkbox input[type='checkbox'] {
-  transform: scale(1.2);
-  cursor: pointer;
-}
-
-
-
-
-
 
 

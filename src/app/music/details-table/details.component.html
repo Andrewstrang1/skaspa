@@ -1,0 +1,37 @@
+<div *ngIf="loading" class="loading-spinner">
+  <div class="spinner"></div>
+  <span>Loading album details...</span>
+</div>
+
+<div *ngIf="!loading && album">
+  <div class="details-container">
+    <!-- Left Panel for Carousel -->
+    <div class="left-panel" *ngIf="isImagesLoaded">
+      <app-carousel [images]="album.albumArt" [themeClass]="themeClass"></app-carousel>
+    </div>
+
+    <!-- Right Panel for Track Listings -->
+    <div class="right-panel">
+      <app-data-table-h
+        [data]="album.tracks"
+        [displayedColumns]="['trackNumber', 'title', 'duration', 'discNumber']"
+        [showHamburgerMenu]="true"
+        [actionButtons]="actionButtons"
+        [showHeaderFooter]="false"
+        [uniqueKey]="'trackNumber'"
+        [pageLength]="50"
+        [themeClass]="'purple-theme'">
+      </app-data-table-h>
+    </div>
+  </div>
+
+  <!-- Save and Back Buttons -->
+  <div class="action-buttons">
+    <button (click)="saveAlbum()">Save</button>
+    <button (click)="goBack()">Back to Results</button>
+  </div>
+</div>
+
+<ng-template #emptyState>
+  <div class="empty-message">No album details available</div>
+</ng-template>

@@ -1,12 +1,10 @@
 <h2>Feature Component with Data Table</h2>
 
-<app-data-tiles-h
+<app-data-table-h
   [data]="tableData"
   [displayedColumns]="displayedColumns"
-  [selectable]="selectable"
-  [showHamburgerMenu]="showHamburgerMenu"
-  [showRating]="showRating"
-  [tableTitle]="'Tile View'" 
-  [themeClass]="selectedTheme"
->
-</app-data-tiles-h>
+  [showTiles]="true"
+  [themeClass]="'purple-theme'"
+  [tableTitle] = "title"
+  [pageSize]="10">
+</app-data-table-h>

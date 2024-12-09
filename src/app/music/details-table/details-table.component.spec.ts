@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailsTableComponent } from './details-table.component';
+import { DetailsTableComponent } from './details.component';
 
 describe('DetailsTableComponent', () => {
   let component: DetailsTableComponent;

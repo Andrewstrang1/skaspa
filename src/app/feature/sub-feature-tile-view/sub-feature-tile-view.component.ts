@@ -25,6 +25,7 @@ export class SubFeatureTileViewComponent implements OnInit {
   showRating = false; //Optional column for product rating 
   selectedTheme = 'purple-theme'; // Default theme
   showTiles = true;
+  title="Some tiles"
 
   ngOnInit(): void { }
 

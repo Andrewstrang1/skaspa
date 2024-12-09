@@ -5,12 +5,12 @@
 
 <app-data-table-h
   [data]="results"
-  [displayedColumns]="['artist',' title', 'catalogNumber', 'genre', 'year']"
+  [displayedColumns]="displayedColumns"
   [showTiles]="true"
   [themeClass]="'purple-theme'"
   [actionButtons]="actionButtons"
   [tableTitle] = "title"
-  [pageSize]="5">
+  [pageSize]="10">
 </app-data-table-h>
 
 

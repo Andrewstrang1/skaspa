@@ -144,70 +144,30 @@
   background-color: #e53935; /* Slightly darker hover */
 }
 
-/* Tiled Display Container - Purple Theme */
-.tiled-container.purple-theme {
-  background-color: #4a2a6f; /* Darker purple background */
-  padding: 20px;
+/* purple-theme.css */
+.carousel-container.purple-theme {
+  background-color: #4b2c70; /* Purple background */
 }
 
-/* Individual Tile - Purple Theme */
-.tile.purple-theme {
-  background-color: #5e3b89; /* Medium purple */
-  border: 1px solid #704fb0;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.carousel-caption.purple-theme {
+  color: #ffd700; /* Gold text */
 }
 
-.tile.purple-theme:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(112, 79, 176, 0.5); /* Slight purple glow */
+.carousel-placeholder.purple-theme {
+  background-color: #4b2c70;
+  color: #ffd700;
+  border: 1px solid #6c3c8d; /* Purple border */
 }
 
-/* Tile Image - Uniform Size */
-.tile-image {
-  width: 100%;
-  height: 300px; /* Set consistent height */
-  object-fit: cover;
-  border-bottom: 1px solid #704fb0;
+
+:root {
+  --tile-background-color: #4b2c70; /* Purple background */
+  --tile-border-color: #6c3c8d; /* Lighter purple border */
+  --tile-text-color: #ebbe2a; /* Light lavender text */
+  --tile-title-color: #ebbe2a; /* White for titles */
+  --highlight-text-color: #FFD700; /* Gold for purple theme */
 }
 
-/* Tile Details */
-.tile-details.purple-theme h4 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #f0e6ff; /* Lighter purple text for title */
-}
-
-.tile-details.purple-theme p {
-  font-size: 0.9rem;
-  color: #d1b3ff; /* Soft lavender for metadata */
-}
-
-.tile-details.purple-theme .tile-price {
-  font-size: 1rem;
-  font-weight: bold;
-  color: #f3e5ff; /* Highlight for pricing */
-}
-
-/* View Details Button */
-.tile-details.purple-theme button {
-  background-color: #704fb0;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 12px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.tile-details.purple-theme button:hover {
-  background-color: #8763d4; /* Lighter purple on hover */
-}
 
 
 
