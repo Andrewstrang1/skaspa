@@ -19,6 +19,22 @@ export const apiConfig: ApiConfig[] = [
     username: null,
     password: null
   },
+  {
+    name: 'AlbumssAPI',
+    baseUrl: 'http://localhost:3000',
+    path: 'api/albums/all',
+    token: null,
+    username: null,
+    password: null
+  },
+  {
+    name: 'YouTubePlaylistAPI',
+    baseUrl: 'http://localhost:3000',
+    path: 'api/youtube/search-playlists?q=',
+    token: null,
+    username: null,
+    password: null
+  },
   // Additional API configurations can be added here as needed
 ];
 // ===================== //

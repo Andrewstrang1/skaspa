@@ -1,17 +1,43 @@
 .details-container {
-    display: grid;
+    /* display: grid; */
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
     grid-template-columns: 1fr 2fr;
     gap: 20px;
     padding: 20px;
     background-color: var(--tile-background-color);
     color: var(--tile-text-color);
   }
-  
+
   .left-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  } 
+    flex: 0 0 auto;
+    width: 30%; /* Adjust width as needed */
+    text-align: center;
+    background-color: #542694;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);    
+  }
+
+  .right-panel {
+    flex: 0 0 auto;
+    width: 68%; /* Adjust width as needed */
+    background-color: #542694;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
+      
+  }
+  .primary-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .placeholder {
+    color: var(--tile-text-color);
+    font-size: 16px;
+  }
   
   .upload-btn,
   .search-btn {
@@ -60,4 +86,85 @@
     background-color: var(--tile-title-color);
     color: var(--tile-background-color);
   }
+
+  .nav-tabs {
+    margin-bottom: 20px;
+  }
+  
+  /* .right-panel {
+    display: flex;
+    flex-direction: column;
+  } */
+  
+  .tab-content {
+    margin-top: 20px;
+  }
+  
+  .panel {
+    background-color: var(--panel-background-color);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: var(--tile-text-color);
+  }
+
+  /* File display */
+  .files-mapping {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .files-list, .tracks-list {
+    width: 45%;
+  }
+  
+  .files-list ul, .tracks-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .files-list li, .tracks-list li {
+    margin: 5px 0;
+  }
+  
+  button {
+    margin-left: 10px;
+    padding: 5px 10px;
+  }
+
+  .spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    color: var(--highlight-text-color, #000); /* Use a theme variable or default color */
+  }
+
+  .input-button-container {
+    display: flex;
+    align-items: center;
+    gap: 2px; /* Space between the input and button */
+  }
+  
+  .input-field {
+    margin-top: 18px;
+    flex-grow: 1; /* Ensures the input field takes up all available space */
+  }
+  
+  .download-button {
+    height: 48px; /* Matches the default height of Material Design inputs */
+    min-width: 100px; /* Set a minimum width for the button */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  
+  
+  
+
+
   

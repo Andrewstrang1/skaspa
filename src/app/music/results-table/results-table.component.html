@@ -2,7 +2,7 @@
   <div class="spinner"></div>
   <span>Loading...</span>
 </div>
-
+<div *ngIf="!loading && results.length > 0">
 <app-data-table-h
   [data]="results"
   [displayedColumns]="displayedColumns"
@@ -12,8 +12,7 @@
   [tableTitle] = "title"
   [pageSize]="10">
 </app-data-table-h>
-
-
+</div>
 
 <div *ngIf="!loading && results.length === 0">
   <p>No results found.</p>

@@ -36,7 +36,7 @@
   border-radius: 4px;
   border: 1px solid #ced4da;
   font-size: 14px;
-  width: 95%; /* Ensures input respects the form-group width */
+  width: 99%; /* Ensures input respects the form-group width */
 }
 
 .form-group label {
@@ -55,7 +55,7 @@
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  height: 34px; /* Ensures alignment with input fields */
+  height: 38px; /* Ensures alignment with input fields */
   line-height: normal; /* Prevents button text from appearing misaligned */
   flex-shrink: 0; /* Prevents the button from shrinking */
 }

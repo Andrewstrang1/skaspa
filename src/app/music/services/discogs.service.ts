@@ -43,7 +43,7 @@ export class DiscogsService {
         this.http.get<{ images: string[] }>(imagesUrl).subscribe((response) => {
           album.albumArt = response.images.map((url) => ({
             url,
-            type: 'Secondary', // Default type
+            type: '' // Default type
           }));
         });
         return album;

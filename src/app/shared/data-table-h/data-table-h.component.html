@@ -58,6 +58,11 @@
             <th *ngIf="selectable" class="checkbox-column">
               <input type="checkbox" (change)="toggleSelectAll($event)" [checked]="selectAllChecked" />
             </th>
+            <!-- Optional Icon Column -->
+            <th *ngIf="showIcon"></th>
+            <!-- Optional Thumbnail Column -->
+            <th *ngIf="showThumbnail"></th>
+            <!-- Existing Columns -->
             <th *ngFor="let column of displayedColumns" (click)="sortColumn(column)">
               {{ column | splitCamelCase |  titlecase }}
               <span *ngIf="sortedColumn === column">
@@ -74,6 +79,13 @@
             <td *ngIf="selectable" class="checkbox-column">
               <input type="checkbox" (change)="toggleRowSelection(row, $event)"
                 [checked]="selectedRows.includes(row)" />
+            </td>
+            <td *ngIf="showIcon" class="icon-column">
+              <img [src]="row.icon" alt="Icon" class="icon-image" />
+            </td>
+            <!-- Thumbnail Column -->
+            <td *ngIf="showThumbnail" class="thumbnail-column">
+              <img [src]="row.thumbnail" alt="" class="thumbnail-image" />
             </td>
             <td *ngFor="let column of displayedColumns">{{ row[column] }}</td>
 
@@ -115,9 +127,7 @@
           <div *ngFor="let column of displayedColumns">
             <strong>{{ column | splitCamelCase | titlecase }}: </strong>
             <span class="highlight-text">{{ row[column] }}</span>
-          </div>
-          
-
+          </div>   
           <!-- Action Buttons -->
           <div class="tile-actions" *ngIf="selectable">
             <ng-container *ngFor="let button of actionButtons">
@@ -178,8 +188,10 @@
         {{ searchTerm ? filteredData.length : data.length }} records found
       </div>
     </div>
+    <div class="height:40px, display=block"></div>
   </div>
 </div>
+
 <ng-template #emptyState>
   <div class="empty-message">No records found</div>
 </ng-template>

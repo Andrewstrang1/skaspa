@@ -12,7 +12,6 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { MusicModule } from './music/music.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +24,7 @@ import { MusicModule } from './music/music.module';
     BrowserAnimationsModule,
     ServicesModule,
     FormsModule, 
-    FeatureModule, MusicModule,   
+    FeatureModule, MusicModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

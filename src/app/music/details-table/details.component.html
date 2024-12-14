@@ -1,35 +1,112 @@
-<div *ngIf="loading" class="loading-spinner">
-  <div class="spinner"></div>
-  <span>Loading album details...</span>
+<div *ngIf="album">
+  <div class="details-container">
+<div class="details-container">
+  <!-- Left Panel -->
+  <div class="left-panel">
+    <ng-container *ngIf="!loading && album">
+      <img *ngIf="album.albumArt[0]?.url" [src]="album.albumArt[0].url" alt="Album cover" class="primary-image" />
+    </ng-container>
+    <div>
+      <h2>{{ album.title }}</h2>
+      <h2>{{ album.artist }}</h2>
+      <p><strong>Record Label:</strong> {{ album.label }}</p>
+      <p><strong>Catalog Number:</strong> {{ album.cat }}</p>
+      <p><strong>Year:</strong> {{ album.year }}</p>
+      <p><strong>Country:</strong> {{ album.country }}</p>
+    </div>
+  </div>
+
+  <!-- Right Panel with Tabs -->
+  <div class="right-panel">
+    <mat-tab-group [(selectedIndex)]="activeTab" (selectedIndexChange)="onTabChange($event)">
+      <mat-tab label="Tracks">
+        <app-data-table-h 
+          [data]="album.tracks"
+          [displayedColumns]="['trackNumber', 'title', 'duration', 'discNumber']"
+          [showHamburgerMenu]="false"
+          [tableTitle] = "'Songs on this Album'"
+          [showHeaderFooter]="showHeaderFooterTracks"
+          [uniqueKey]="'trackNumber'"
+          [pageSize]="pageSizeTracks"
+          [themeClass]="'purple-theme'">
+        </app-data-table-h>
+      </mat-tab>
+      <mat-tab label="Playlists">
+         <!-- Narrow panel for manual playlist URL input -->
+         <div class="input-button-container">
+          <mat-form-field appearance="outline" class="input-field">
+          <mat-label>Enter playlist URL manually if you prefer...</mat-label>
+          <input matInput #playlistUrl />
+        </mat-form-field>
+        <button mat-raised-button color="primary" class="download-button" (click)="downloadPlaylistManually(playlistUrl.value)">
+          Download
+        </button>
+      </div>
+        <app-data-table-h 
+          [data]="playlists"
+          [displayedColumns]="['title']"
+          [showHamburgerMenu]="true"
+          [tableTitle] = "'Youtube Playlists'"
+          [actionButtons]="actionButtonsPlaylists"
+          [uniqueKey]="'title'"
+          [showThumbnail] = "true"
+          [showHeaderFooter]="showHeaderFooterPlaylists"
+          [pageSize]="pageSizePlaylists"
+          [themeClass]="themeClass">
+        </app-data-table-h>
+      </mat-tab>
+      <mat-tab label="Files">
+        <div class="tab-content-wrapper">
+          <!-- Spinner -->
+          <div *ngIf="loading" class="spinner-container">
+            <mat-spinner></mat-spinner>
+            <p>{{ statusMessage }}</p>
+            <div *ngIf="messages.length > 0" class="message-log">
+              <p *ngFor="let message of messages">{{ message }}</p>
+            </div>
+          </div>
+      
+          <!-- Content -->
+          <div *ngIf="!loading" class="files-mapping">
+            <div class="files-list">
+              <h3>Files</h3>
+              <ul>
+                <li *ngFor="let file of files">
+                  {{ file.title }}
+                  <button (click)="assignFileToTrack(file)">Assign</button>
+                </li>
+              </ul>
+            </div>
+            <div class="tracks-list">
+              <h3>Tracks</h3>
+              <ul>
+                <li *ngFor="let track of album.tracks">
+                  {{ track.trackNumber }} {{ track.title }}
+                  <span *ngIf="trackToFileMapping[track.trackNumber]">
+                    (Assigned to: {{ trackToFileMapping[track.trackNumber]?.title }})
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </mat-tab>      
+
+      <mat-tab label="Gallery">
+        <p>Gallery tab content goes here.</p>
+      </mat-tab>
+      <mat-tab label="About this album">
+        <p>Info tab content goes here.</p>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>
 
-<div *ngIf="!loading && album">
-  <div class="details-container">
-    <!-- Left Panel for Carousel -->
-    <div class="left-panel" *ngIf="isImagesLoaded">
-      <app-carousel [images]="album.albumArt" [themeClass]="themeClass"></app-carousel>
-    </div>
-
-    <!-- Right Panel for Track Listings -->
-    <div class="right-panel">
-      <app-data-table-h
-        [data]="album.tracks"
-        [displayedColumns]="['trackNumber', 'title', 'duration', 'discNumber']"
-        [showHamburgerMenu]="true"
-        [actionButtons]="actionButtons"
-        [showHeaderFooter]="false"
-        [uniqueKey]="'trackNumber'"
-        [pageLength]="50"
-        [themeClass]="'purple-theme'">
-      </app-data-table-h>
-    </div>
-  </div>
-
   <!-- Save and Back Buttons -->
-  <div class="action-buttons">
-    <button (click)="saveAlbum()">Save</button>
-    <button (click)="goBack()">Back to Results</button>
-  </div>
+  <!-- <div class="action-panel">
+    <button class="save-btn" (click)="saveAlbum()">Save</button>
+    <button class="back-btn" (click)="goBack()">Back to Results</button>
+  </div> -->
 </div>
 
 <ng-template #emptyState>

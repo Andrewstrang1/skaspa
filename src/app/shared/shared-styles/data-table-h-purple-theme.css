@@ -144,28 +144,13 @@
   background-color: #e53935; /* Slightly darker hover */
 }
 
-/* purple-theme.css */
-.carousel-container.purple-theme {
-  background-color: #4b2c70; /* Purple background */
-}
-
-.carousel-caption.purple-theme {
-  color: #ffd700; /* Gold text */
-}
-
-.carousel-placeholder.purple-theme {
-  background-color: #4b2c70;
-  color: #ffd700;
-  border: 1px solid #6c3c8d; /* Purple border */
-}
-
-
 :root {
   --tile-background-color: #4b2c70; /* Purple background */
   --tile-border-color: #6c3c8d; /* Lighter purple border */
   --tile-text-color: #ebbe2a; /* Light lavender text */
   --tile-title-color: #ebbe2a; /* White for titles */
   --highlight-text-color: #FFD700; /* Gold for purple theme */
+  --panel-background-color: #bb9de6; /* Slightly lighter purple for panel contrast */
 }
 
 

@@ -86,8 +86,6 @@ tbody tr:hover { background-color: #f0f8ff; }
   padding: 10px;
   background-color: #e6f7ff;
 }
-  
-
 
 .title-and-search {
   display: flex;
@@ -379,7 +377,14 @@ button.cancel-btn {
   border-radius: 4px;
   width: 100px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  z-index: 1050 !important; /* Ensure it's above other elements */
+  display: block; /* Ensure the element is displayed */
+}
+
+.dropdown-menu.hidden {
+  opacity: 0;
+  transform: translateY(-10px); /* Slide up when hidden */
+  pointer-events: none; /* Prevent interactions */
 }
 
 .dropdown-menu button {
@@ -491,5 +496,31 @@ button.cancel-btn {
   color: var(--highlight-text-color, #FFD700);
   /* font-weight: bold; Optional for emphasis */
 }
+
+/* Icon Column */
+.icon-column {
+  width: 50px; /* Adjust as needed */
+  text-align: center;
+}
+
+.icon-image {
+  width: 20px;
+  height: 20px;
+  object-fit: contain; /* Keep aspect ratio */
+}
+
+/* Thumbnail Column */
+.thumbnail-column {
+  width: 80px; /* Adjust as needed */
+  text-align: center;
+}
+
+.thumbnail-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover; /* Crop to fill the space */
+  border-radius: 4px; /* Optional for rounded edges */
+}
+
 
 
