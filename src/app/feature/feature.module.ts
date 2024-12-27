@@ -12,6 +12,7 @@ import { ApiIntegrationComponent } from './api-integration/api-integration.compo
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { SubFeatureTileViewComponent } from './sub-feature-tile-view/sub-feature-tile-view.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { SubFeatureWithDraggableTableComponent } from './sub-feature-with-draggable-table/sub-feature-with-draggable-table.component';
 
 
 const routes: Routes = [
@@ -25,8 +26,7 @@ const routes: Routes = [
       { path: 'api-integration', component: ApiIntegrationComponent },
       { path: 'app-sub-feature-tile-view', component: SubFeatureTileViewComponent },
       { path: 'product-details/:id', component: ProductDetailsComponent },
-
-
+      { path: 'draggable', component: SubFeatureWithDraggableTableComponent}
       ]
   }
 ];
@@ -39,12 +39,13 @@ const routes: Routes = [
     SubFeatureWithDatatableComponentHTML,
     ApiIntegrationComponent,
     ProductDetailsComponent,
-    SubFeatureTileViewComponent
+    SubFeatureTileViewComponent,
+    SubFeatureWithDraggableTableComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    SharedModule,  // Import SharedModule to use DataTableComponent
+    SharedModule,  // Import SharedModule to use DataTableComponents
     ServicesModule, FormsModule,
     NgbCarouselModule
   ]

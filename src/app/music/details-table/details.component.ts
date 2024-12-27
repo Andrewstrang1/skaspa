@@ -5,7 +5,7 @@ import { Album, AlbumArt, Track, PlayList } from '../models/album.model';
 import { ActionButton } from '../../shared/data-table-h/data-table-h.component';
 import { YouTubeService } from '../services/youTube.service';
 import { TrackFileService } from '../services/track-file.service';
-import { SocketService } from '../../services/socket.service';
+import { FileMapService } from '../services/fileMapservice';
 
 @Component({
   selector: 'app-details',
@@ -16,6 +16,8 @@ export class DetailsComponent implements OnInit {
 
   album: Album | null = null; // Store album details
   loading: boolean = true;
+  playListsLoading = true;
+  filesLoading = false;
   themeClass: string = 'purple-theme';
   isImagesLoaded: boolean = false; // Tracks whether images are loaded
   actionButtons: ActionButton[] = [
@@ -64,7 +66,7 @@ export class DetailsComponent implements OnInit {
     private discogsService: DiscogsService,
     private youTubeService: YouTubeService,
     private trackFileService: TrackFileService,
-    private socketService: SocketService  ) { }
+    private fileMapService: FileMapService  ) { }
 
   ngOnInit(): void {
     const releaseID = this.route.snapshot.paramMap.get('id'); // Retrieve the releaseID
@@ -135,7 +137,7 @@ export class DetailsComponent implements OnInit {
   loadPlaylists(): void {
 
     if (!this.album) return;
-  
+    this.playListsLoading = true;
     const query = this.sanitizeAndFormatQuery(
       this.album.artist || '',
       this.album.title || ''
@@ -155,54 +157,17 @@ export class DetailsComponent implements OnInit {
             ? playlist.thumbnail 
             : this.album?.albumArt[0]?.url || 'assets/default-album-art.png' // Use albumArt or default image
           }));
+          this.playListsLoading = false; 
         } else {
           console.warn('Failed to fetch playlists.');
         }
       },
       error: (err) => {
         console.error('Error fetching playlists:', err);
+        this.playListsLoading = false; 
       },
     });
   }
-
-  viewPlaylist(row: any): void {
-    if (row.url) {
-      window.open(row.url, '_blank'); // Open the playlist URL in a new tab
-    } else {
-      console.warn('No URL provided for this playlist.');
-    }
-  }
-  
-  downloadPlaylist(row: any): void {
-    this.loading = true; // Show spinner
-    this.statusMessage = 'Downloading...please wait';
-    this.messages = []; // Clear previous messages
-    this.activeTab = 2; // Navigate to Files tab
-
-        // Emit the download event to the server
-    this.socketService.emit('downloadFiles', { url: row.url });
-
-    const payload = { url: row.url };
-    this.youTubeService.downloadPlaylist(row.url).subscribe({
-        next: (response) => {
-            console.log('Playlist downloaded:', response);
-            this.statusMessage = 'Download complete!';
-            
-            this.files = response.files; // Populate Files tab
-            this.socketService.on('downloadComplete').subscribe(() => {
-              this.loading = false;
-              this.messages.push('Download complete!');
-            });
-
-        },
-        error: (error) => {
-            console.error('Error downloading playlist:', error);
-            this.statusMessage = 'Error during download.';
-            this.loading = false; // Hide spinner
-        },
-    });
-  }
-
   downloadPlaylistManually(url: string): void {
     this.loading = true; // Show spinner
     this.statusMessage = 'Downloading...please wait';
@@ -223,6 +188,47 @@ export class DetailsComponent implements OnInit {
         },
     });
   }
+
+  viewPlaylist(row: any): void {
+    if (row.url) {
+      window.open(row.url, '_blank'); // Open the playlist URL in a new tab
+    } else {
+      console.warn('No URL provided for this playlist.');
+    }
+  }
+  
+  downloadPlaylist(row: any): void {
+    this.filesLoading = true; // Show spinner
+    this.statusMessage = 'Downloading...please wait';
+    this.messages = []; // Clear previous messages
+
+    const payload = { url: row.url };
+    this.youTubeService.downloadPlaylist(row.url).subscribe({
+        next: (response) => {
+            console.log('Playlist downloaded:', response);
+            this.statusMessage = 'Download complete!';
+            
+            this.files = response.files; // Populate Files tab
+
+            // Use the FileMapService to map files to album tracks
+            if (this.album) {
+              const mappedTracks = this.fileMapService.mapFileToTrack(this.album, this.files.map(file => file.title));
+              console.log('Mapped Tracks:', mappedTracks);
+
+              // Update the album's track list or a separate dataset if needed
+              this.album.tracks = mappedTracks;
+            }
+
+            this.filesLoading = false; // Hide spinner
+            this.activeTab = 2; // Navigate to Files tab
+        },
+        error: (error) => {
+            console.error('Error downloading playlist:', error);
+            this.statusMessage = 'Error during download.';
+            this.filesLoading = false; // Hide spinner
+        },
+    });
+}
 
   assignFileToTrack(file: any): void {
     this.trackFileService.assignFileToTrack(this.album, file);

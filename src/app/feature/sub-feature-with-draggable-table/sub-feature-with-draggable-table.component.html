@@ -1,0 +1,9 @@
+<app-draggable-data-table
+  [sourceData]="sourceData"
+  [destinationData]="destinationData"
+  [displayedColumns]="['id', 'name', 'artist']"
+  themeClass="purple-theme"
+  [tableSizeRatios]="'40% 60%'"
+  (saveChanges)="handleSave($event)"
+  (resetData)="handleReset()">
+</app-draggable-data-table>

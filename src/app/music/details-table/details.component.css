@@ -160,6 +160,36 @@
     align-items: center;
     justify-content: center;
   }
+
+  .details-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .album-info-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .thumbnail-image {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .album-info-text {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .tabs-container {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  
   
   
   

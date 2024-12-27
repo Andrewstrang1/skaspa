@@ -1,0 +1,14 @@
+.sub-feature-container {
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  app-draggable-data-table {
+    display: flex;
+    justify-content: center;
+  }
+  

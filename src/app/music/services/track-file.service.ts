@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
 import { YouTubeService } from '../services/youTube.service';
 import { Album, Track } from '../models/album.model';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TrackFileService {
+
+  private readonly apiBaseUrl = 'http://localhost:3000/api';
+
   trackToFileMapping: { [trackNumber: string]: any } = {};
 
-  constructor(private youtubeService: YouTubeService) {}
+  constructor(private youtubeService: YouTubeService, private http: HttpClient) {}
+
+  // search files from api with baseurl  + files endpoint           
+  searchFiles(query: string): Observable<any> {
+    const apiUrl = `${this.apiBaseUrl}/files?q=${query}`;
+    return this.http.get<any>(apiUrl);
+  }
 
   assignFileToTrack(album: Album | null, file: any): void {
     if (!album) return;

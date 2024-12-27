@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Angular Material Modules
 import { MatTableModule } from '@angular/material/table';
@@ -18,6 +19,7 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 
 // Non-Material Components
 import { DataTableHComponent } from './data-table-h/data-table-h.component';
+import { DraggableDataTableComponent } from './draggable-data-table/draggable-data-table.component';
 import { EditComponentHComponent } from './edit-component-h/edit-component-h.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
 
@@ -27,6 +29,7 @@ import { SplitCamelCasePipe } from '../pipes/splitCamelCase.pipe';
 import { CarouselComponent } from './carousel/carousel.component';
 
 
+
 @NgModule({
   declarations: [
     DataTableComponent,       // Material component
@@ -34,12 +37,14 @@ import { CarouselComponent } from './carousel/carousel.component';
     DataTableHComponent,      // Non-Material component
     EditComponentHComponent, StarRatingComponent,
     SplitCamelCasePipe,
-    CarouselComponent
+    CarouselComponent,
+    DraggableDataTableComponent
 
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    DragDropModule,
     
     // Angular Material Modules for Material Components
     MatTableModule,
@@ -55,6 +60,7 @@ import { CarouselComponent } from './carousel/carousel.component';
     EditDialogComponent,      // Material component
     DataTableHComponent,      // Non-Material component
     EditComponentHComponent,   // Non-Material component
+    DraggableDataTableComponent,
     StarRatingComponent,
     SplitCamelCasePipe,
     CarouselComponent

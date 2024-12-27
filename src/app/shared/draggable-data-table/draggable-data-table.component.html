@@ -1,0 +1,40 @@
+<div class="draggable-container">
+  <div class="action-buttons">
+    <button mat-raised-button class="save-button" (click)="onSave()">Save</button>
+    <button mat-raised-button class="undo-button" (click)="onUndo()">Undo</button>
+  </div>
+
+  <!-- Source Table -->
+  <div class="table-wrapper source-table" [ngClass]="themeClass">
+    <h3>Source</h3>
+    <div
+      cdkDropList
+      id="sourceTable"
+      [cdkDropListData]="sourceData"
+      [cdkDropListConnectedTo]="['destinationTable']"
+      (cdkDropListDropped)="onDrop($event)"
+      class="drag-drop-list"
+    >
+      <div class="row" *ngFor="let item of sourceData" cdkDrag>
+        <div *ngFor="let col of displayedColumns">{{ item[col] }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Destination Table -->
+  <div class="table-wrapper destination-table" [ngClass]="themeClass">
+    <h3>Destination</h3>
+    <div
+      cdkDropList
+      id="destinationTable"
+      [cdkDropListData]="destinationData"
+      [cdkDropListConnectedTo]="['sourceTable']"
+      (cdkDropListDropped)="onDrop($event)"
+      class="drag-drop-list"
+    >
+      <div class="row" *ngFor="let item of destinationData" cdkDrag>
+        <div *ngFor="let col of displayedColumns">{{ item[col] }}</div>
+      </div>
+    </div>
+  </div>
+</div>
