@@ -62,7 +62,7 @@ export class UriBuilderService {
   /**
    * Build the full API URL with query parameters.
    */
-  private buildRequestUrl(baseUrl: string, params: { [key: string]: string }): string {
+   buildRequestUrl(baseUrl: string, params: { [key: string]: string }): string {
     const queryString = Object.keys(params)
       .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
       .join('&');

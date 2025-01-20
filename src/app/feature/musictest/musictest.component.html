@@ -1,0 +1,21 @@
+<div>
+  <label for="api-select">Select API:</label>
+    <select id="api-select" [(ngModel)]="selecetdAPI">
+      <option value="MusicBrainz">MusicBrainz</option>
+      <option value="Discogs">Discogs</option>
+    </select>
+    <label for="artist">Artist:</label>
+    <input id="artist" [(ngModel)]="artist" placeholder="Enter artist name" />
+
+    <label for="album">Album:</label>
+    <input id="album" [(ngModel)]="albumTitle" placeholder="Enter album title" />
+
+
+
+    <button (click)="fetchReleases()">Fetch Releases</button>
+
+    <div *ngIf="results">
+      <h3>Results:</h3>
+      <pre>{{ results | json }}</pre>
+    </div>
+  </div>

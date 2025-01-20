@@ -1,6 +1,5 @@
 <div *ngIf="loading" class="loading-spinner">
-  <div class="spinner"></div>
-  <span>Loading...</span>
+<app-spinner labelText= {{spinnerText}} themeClass={{spinnerTheme}}></app-spinner>
 </div>
 <div *ngIf="!loading && results.length > 0">
 <app-data-table-h
@@ -12,8 +11,4 @@
   [tableTitle] = "title"
   [pageSize]="10">
 </app-data-table-h>
-</div>
-
-<div *ngIf="!loading && results.length === 0">
-  <p>No results found.</p>
 </div>

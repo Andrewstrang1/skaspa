@@ -29,7 +29,7 @@
         <mat-tab label="Tracks">
           <app-data-table-h 
             [data]="album.tracks"
-            [displayedColumns]="['trackNumber', 'title', 'duration', 'discNumber']"
+            [displayedColumns]="['trackNumber', 'title', 'length']"
             [showHamburgerMenu]="false"
             [tableTitle]="'Songs on this Album'"
             [showHeaderFooter]="showHeaderFooterTracks"
@@ -54,55 +54,43 @@
             </button>
           </div>
           <div class="spinner-container" *ngIf="playListsLoading">
-            <mat-spinner></mat-spinner>
-            <p>Loading playlists...</p>
+            <app-spinner *ngIf="playListsLoading" [labelText]="'Loading YouTube playlists'" [themeClass]="'purple-theme'"></app-spinner>
           </div>
-          <app-data-table-h 
-            [data]="playlists"
-            [displayedColumns]="['title']"
-            [showHamburgerMenu]="true"
-            [tableTitle]="'YouTube Playlists'"
-            [actionButtons]="actionButtonsPlaylists"
-            [uniqueKey]="'title'"
-            [showThumbnail]="true"
-            [showHeaderFooter]="showHeaderFooterPlaylists"
-            [pageSize]="pageSizePlaylists"
-            [themeClass]="themeClass"
-          ></app-data-table-h>
+          <!--Surround data table with a div-->
+          <div *ngIf="!playListsLoading">
+            <app-data-table-h 
+              [data]="playlists"
+              [displayedColumns]="['title']"
+              [showHamburgerMenu]="true"
+              [tableTitle]="'YouTube Playlists'"
+              [actionButtons]="actionButtonsPlaylists"
+              [actionBarVisible]="true"
+              [uniqueKey]="'title'"
+              [showThumbnail]="true"
+              [showHeaderFooter]="showHeaderFooterPlaylists"
+              [pageSize]="pageSizePlaylists"
+              [themeClass]="themeClass"
+            ></app-data-table-h>
+          </div>
         </mat-tab>
+        <!-- Files Tab  -->
         <mat-tab label="Files">
           <div class="tab-content-wrapper">
             <!-- Spinner -->
-            <div *ngIf="filesLoading" class="spinner-container">
-              <mat-spinner></mat-spinner>
-              <p>Loading files, this could take a few seconds...</p>
-              <div *ngIf="messages.length > 0" class="message-log">
-                <p *ngFor="let message of messages">{{ message }}</p>
-              </div>
-            </div>
+            <app-spinner *ngIf="filesLoading" [labelText]="'Loading files...'" [themeClass]="'purple-theme'"></app-spinner>
             <!-- Content -->
-            <div *ngIf="!filesLoading" class="files-mapping">
-              <div class="files-list">
-                <h3>Files</h3>
-                <ul>
-                  <li *ngFor="let file of files">
-                    {{ file.title }}
-                    <button (click)="assignFileToTrack(file)">Assign</button>
-                  </li>
-                </ul>
-              </div>
-              <div class="tracks-list">
-                <h3>Tracks</h3>
-                <ul>
-                  <li *ngFor="let track of album.tracks">
-                    {{ track.trackNumber }} {{ track.title }}
-                    <span *ngIf="trackToFileMapping[track.trackNumber]">
-                      (Assigned to: {{ trackToFileMapping[track.trackNumber]?.title }})
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+           <app-data-table-h 
+            [data]="mappedTracks"
+            [displayedColumns]="['trackNumber', 'title', 'oldFileName','newFileName', 'duration']"
+            [showHamburgerMenu]="true"
+            [actionButtons]="actionButtonsFiles"
+            [selectable]="true"
+            [tableTitle]="fileTableTitle"
+            [actionBarVisible]="true"
+            [uniqueKey]="'title'"
+            [showHeaderFooter]="true"
+            [themeClass]="'purple-theme'"
+          ></app-data-table-h>
           </div>
         </mat-tab>
         <mat-tab label="Gallery">

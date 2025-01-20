@@ -33,6 +33,7 @@ export class DataTableHComponent implements OnChanges {
   @Input() currentPage: number = 1; // Track the current page
   @Input() pageSize: number = 15; // Default number of rows per page
   @Input() showHeaderFooter: boolean = true;
+  @Input() actionBarVisible: boolean = false; // New property for action bar visibility, default to false;
   @Input() showIcon: boolean = false; // Show icon column
   @Input() showThumbnail: boolean = false; // Show thumbnail column
   

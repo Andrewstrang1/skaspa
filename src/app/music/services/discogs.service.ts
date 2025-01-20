@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Discogs } from '../../services/api-config';
 import { Album, Track } from '../models/album.model';
+import { of } from 'rxjs';
 
 
 @Injectable({
@@ -26,30 +27,78 @@ export class DiscogsService {
 
     return this.http.get<any>(url, { params }).pipe(
 
-      map((response) => this.mapDiscogsToAlbums(response.results))
+    map((response) => this.mapDiscogsToAlbums(response.results))
     );
+  }
+
+
+getTracklist(album: Album): Observable<Track[]> {
+  console.log('Fetching tracklist for album:', album.title + ' - MasterID:', album.masterID);
+  const url = `${this.discogsConfig.ApiUrl}/masters/${album.masterID}`;
+  console.log('Tracklist URL:', url);
+
+  return this.http.get<any>(url).pipe(
+    map((response) => {
+      
+      const tracks = response.tracklist?.map((track: any): Track => ({
+        title: track.title || 'Unknown Title',
+        length: track.duration || '0:00',
+        trackNumber: track.position || '0',
+        discNumber: track.disc || 1,
+        credits: track.credits || 'Unknown Credits',
+        trackImage: track.thumb || 'assets/default-album-art.png',  
+        album: album.title || 'Unknown Album',
+        artist: album.artist || 'Unknown Artist',
+        recordingid: track.recordingid
+      
+      })) || [];
+      return tracks;
+    })
+  );
   }
 
   // Get album details by release ID and images separately
   getAlbumDetails(releaseId: string): Observable<Album> {
-    const detailsUrl = `${this.discogsConfig.ApiUrl}/releases/${releaseId}`;
-    const imagesUrl = `http://localhost:3000/api/discogs/images/${releaseId}`;
+    const releaseDetailsUrl = `${this.discogsConfig.ApiUrl}/releases/${releaseId}`;
+    const masterDetailsUrl = `${this.discogsConfig.ApiUrl}/masters/${releaseId}`;
+    const imagesUrl = `${this.localApiBaseUrl}/discogs/images/${releaseId}`;
   
-    // Fetch album details and images in parallel
-    return this.http.get<any>(detailsUrl).pipe(
-      map((details) => this.mapDiscogsToAlbumDetails(details)),
-      map((album) => {
-        // Fetch images after details
-        this.http.get<{ images: string[] }>(imagesUrl).subscribe((response) => {
-          album.albumArt = response.images.map((url) => ({
-            url,
-            type: '' // Default type
-          }));
-        });
-        return album;
+    // Fetch release details first
+    return this.http.get<any>(releaseDetailsUrl).pipe(
+      map((releaseDetails) => {
+        console.log('Release Details Response:', releaseDetails);
+        return this.mapDiscogsToAlbumDetails(releaseDetails);
+      }),
+      switchMap((album) => {
+        console.log('Mapped Album (after release details):', album);
+        if (!album.tracks || album.tracks.length === 0) {
+          return this.http.get<any>(masterDetailsUrl).pipe(
+            map((masterDetails) => {
+              console.log('Master Details Response:', masterDetails);
+              album.tracks = masterDetails.tracklist?.map((track: any): Track => ({
+                title: track.title || 'Unknown Title',
+                length: track.duration || '0:00',
+                trackNumber: track.position || '0',
+                discNumber: track.disc || 1,
+                trackImage: track.thumb || 'assets/default-album-art.png',
+                credits: track.credits || 'Unknown Credits',
+                album: masterDetails.title || album.title,
+                artist: masterDetails.artists?.[0]?.name || album.artist,
+              })) || [];
+              console.log('Mapped Tracks (from master):', album.tracks);
+              return album;
+            })
+          );
+        }
+        return of(album);
       })
     );
+    
   }
+  
+
+  
+  
 
   // Fetch album images from local API
   getAlbumImages(releaseId: string): Observable<string[]> {
@@ -61,7 +110,7 @@ export class DiscogsService {
 
   // Map Discogs search results to Album model
   private mapDiscogsToAlbums(results: any[]): Album[] {
-    console.log(results);
+    console.log('Mapped results:', results);
     return results.map((result) => {
       const [artist, ...titleParts] = result.title.split(' - '); // Split on ' - '
       const title = titleParts.join(' ') || 'Unknown Title'; // Join remaining parts for the title
@@ -71,7 +120,7 @@ export class DiscogsService {
         cat: result.catno || 'N/A', // Handle undefined catalog number
         albumArt: [{ url: result.cover_image || 'assets/default-album-art.png', type: 'Front Cover' }], // Front cover as default
         image: result.cover_image,
-        tracks: [], // Detailed tracks can be fetched later
+        tracks: result.tracklist, // Detailed tracks can be fetched later
         duration: 0, // Placeholder for now
         releaseID: result.id, // Add releaseID from API response
         mediaAvailable: false, // Default to false
@@ -81,11 +130,13 @@ export class DiscogsService {
         year: result.year,
         country: result.country,
         label: result.label?.[0] || 'Unknown Label',
+        format: result.formats?.[0].name || 'Unknown Format',
+        masterID: result.master_id, // Add masterID from API response
       };
     });
   }  
   
-  // Map Discogs album details to Album model
+  // Static method used elsewhere to Map Discogs album details to Album model
   private mapDiscogsToAlbumDetails(details: any): Album {
     console.log('Raw response: ', details);
     return {
@@ -97,13 +148,14 @@ export class DiscogsService {
       tracks: details.tracklist.map((track: any): Track => ({
         title: track.title || 'Unknown Title',
         // duration: this.convertDuration(track.duration || '0:00'),
-        duration: (track.duration || '0:00'),
+        length: (track.length || '0:00'),
         // trackNumber: parseInt(track.position, 10) || 0,
         trackNumber: track.position || 0,
         discNumber: track.disc || 1,
-        composer: track.composers || [],
-        performer: track.performers || [],
-        producer: track.producers || [],
+        trackImage: track.thumb || 'assets/default-album-art.png',
+        credits: track.credits || 'Unknown Credits',
+        album: details.title || 'Unknown Album',
+        artist: details.artists?.[0]?.name || 'Unknown Artist',
       })),
       duration: this.calculateTotalDuration(details.tracklist),
       releaseID: details.id || '',

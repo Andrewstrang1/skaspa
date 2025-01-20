@@ -2,38 +2,20 @@
   <div class="search-panel">
     <form (ngSubmit)="onSearch()" class="search-form">
       <div class="form-group">
-        <!-- <label for="artist">Artist/Title</label> -->
-        <input
-          type="text"
-          id="artist"
-          placeholder="Enter artist and/or title"
-          [(ngModel)]="searchCriteria.artist"
-          name="artist"
-        />
-      </div>
-      <!-- <div class="form-group">
-        <label for="title">Title</label>
-        <input
-          type="text"
-          id="title"
-          placeholder="Enter album title"
-          [(ngModel)]="searchCriteria.title"
-          name="title"
-        />
+        <input type="text" id="artist" placeholder="Enter artist name" [(ngModel)]="searchCriteria.artist"
+          name="artist" autocomplete="on"/>
       </div>
       <div class="form-group">
-        <label for="catalog">Catalog Number</label>
-        <input
-          type="text"
-          id="catalog"
-          placeholder="Enter catalog number"
-          [(ngModel)]="searchCriteria.cat"
-          name="catalog"
-        />
-      </div> -->
+        <input type="text" id="title" placeholder="Enter album title" [(ngModel)]="searchCriteria.title" name="title" autocomplete="on"/>
+      </div>
+
       <div class="form-group">
         <button type="submit" class="search-button">Search</button>
       </div>
+      <app-toggle-switch 
+        [isChecked]="featureToggleState" 
+        label="(find best match only)"
+        (toggleChange)="onToggleFeature($event)"></app-toggle-switch>
     </form>
   </div>
 </div>

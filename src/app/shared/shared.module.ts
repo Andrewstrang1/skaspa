@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Components with Angular Material
 import { DataTableComponent } from './data-table/data-table.component';
@@ -27,6 +28,9 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
 
 import { SplitCamelCasePipe } from '../pipes/splitCamelCase.pipe';
 import { CarouselComponent } from './carousel/carousel.component';
+import { ToggleSwitchComponent } from './toggle-switch/toggle-switch.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { NavigationDropdownComponent } from './navigation-dropdown/navigation-dropdown.component';
 
 
 
@@ -38,7 +42,10 @@ import { CarouselComponent } from './carousel/carousel.component';
     EditComponentHComponent, StarRatingComponent,
     SplitCamelCasePipe,
     CarouselComponent,
-    DraggableDataTableComponent
+    DraggableDataTableComponent,
+    ToggleSwitchComponent,
+    SpinnerComponent,
+    NavigationDropdownComponent
 
   ],
   imports: [
@@ -52,7 +59,7 @@ import { CarouselComponent } from './carousel/carousel.component';
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule,
+    MatInputModule, MatProgressSpinnerModule,
     NgbModule, NgbCarouselModule
   ],
   exports: [
@@ -63,7 +70,10 @@ import { CarouselComponent } from './carousel/carousel.component';
     DraggableDataTableComponent,
     StarRatingComponent,
     SplitCamelCasePipe,
-    CarouselComponent
+    CarouselComponent,
+    ToggleSwitchComponent, 
+    SpinnerComponent, 
+    NavigationDropdownComponent
     
   ],
   entryComponents: [EditDialogComponent]  // Required for Angular Material dialog

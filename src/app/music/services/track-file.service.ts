@@ -13,14 +13,19 @@ export class TrackFileService {
 
   trackToFileMapping: { [trackNumber: string]: any } = {};
 
-  constructor(private youtubeService: YouTubeService, private http: HttpClient) {}
+  constructor(private youtubeService: YouTubeService, private http: HttpClient) { }
 
   // search files from api with baseurl  + files endpoint           
   searchFiles(query: string): Observable<any> {
     const apiUrl = `${this.apiBaseUrl}/files?q=${query}`;
     return this.http.get<any>(apiUrl);
   }
-
+  /**
+   * assigns file to track, based on track number
+   * @param album 
+   * @param file 
+   * @returns 
+   */
   assignFileToTrack(album: Album | null, file: any): void {
     if (!album) return;
     const trackNumber = prompt('Enter the track number to assign this file to:');
@@ -61,7 +66,8 @@ export class TrackFileService {
           artist: album.artist,
           album: album.title,
           trackNumber: track.trackNumber,
-          duration: track.duration,
+          length: track.length,
+          credits: track.credits
         },
       };
     });
@@ -74,6 +80,19 @@ export class TrackFileService {
         console.error('Error saving track mappings:', err);
       },
     });
-  
   }
+  getTrackProducers(track: any){
+    // create and return an array of three dummy strings
+    return ['Producer 1', 'Producer 2', 'Producer 3'];
+  }
+  getTrackComposers(track: any) {
+    // create and return an array of three dummy strings
+    return ['Composer 1', 'Composer 2', 'Composer 3'];
+    
+
+  };
+  getTrackPerformers(track: any) {
+// create and return an array of three dummy strings
+    return ['Performer 1', 'Performer 2', 'Performer 3'];
+  };
 }

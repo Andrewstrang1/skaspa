@@ -1,18 +1,25 @@
 /* Styling for the search container */
+/* Styling for the search container */
 .search-container {
   display: flex;
   justify-content: center;
-  margin: 20px;
+  width: calc(100% - 10px); /* Take up full width minus 10px */
+  margin-left: 5px; /* Add 5px margin to the left */
+  margin-right: 5px; /* Add 5px margin to the right */
+  padding: 0; /* Remove padding */
+  font-size: 0.75em; /* Reduce text size to 75% */
 }
 
 /* Styling for the search panel */
 .search-panel {
+  display: flex;
+  justify-content: center;
+  width: 100%; /* Take up full width */
+  padding: 20px; /* Add 20px padding */
+  margin: 0; /* Remove margin */
   background-color: #6a4895; /* Lighter purple background */
-  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for elevation */
-  width: 100%; /* Make the panel take up full width */
-  max-width: 600px; /* Optional: Limit the maximum width */
   border: 1px solid #5a3d83; /* Slightly darker border for purple theme */
 }
 
@@ -21,7 +28,7 @@
   display: flex;
   align-items: flex-end; /* Align the button with input fields */
   gap: 10px; /* Spacing between form groups */
-  flex: 1; /* Ensures full width for the form */
+ 
 }
 
 /* Styling for each form group */
@@ -35,12 +42,12 @@
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #ced4da;
-  font-size: 14px;
+  font-size: 12px;
   width: 99%; /* Ensures input respects the form-group width */
 }
 
 .form-group label {
-  font-weight: bold;
+  font-weight: normal;
   margin-bottom: 5px;
   color: white; /* White labels for contrast */
 }
@@ -77,4 +84,62 @@
   .search-button {
     width: 100%; /* Full-width button on smaller screens */
   }
+}
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  border-radius: 20px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-switch .label {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 20px;
+  z-index: 0;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
 }

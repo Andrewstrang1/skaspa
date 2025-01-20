@@ -37,7 +37,7 @@
       </div>
       <div *ngIf="!loading">
         <!-- Action Buttons on a Separate Row -->
-        <div class="action-buttons-row" *ngIf="hasSelectedRows()">
+        <div class="action-buttons-row" *ngIf="hasSelectedRows()|| actionBarVisible">
           <ng-container *ngFor="let button of actionButtons">
             <button *ngIf="button.location === 'actionBar' || button.location === 'both'"
               (click)="triggerAction(button)" [attr.aria-label]="button.label" class="icon-button">
@@ -75,6 +75,7 @@
           </tr>
         </thead>
         <tbody>
+              
           <tr *ngFor="let row of pagedData">
             <td *ngIf="selectable" class="checkbox-column">
               <input type="checkbox" (change)="toggleRowSelection(row, $event)"

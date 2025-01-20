@@ -1,0 +1,19 @@
+div {
+    margin: 20px;
+  }
+  label {
+    display: block;
+    margin-top: 10px;
+  }
+  input {
+    margin-bottom: 10px;
+  }
+  button {
+    margin-top: 10px;
+  }
+  pre {
+    background: #f8f8f8;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

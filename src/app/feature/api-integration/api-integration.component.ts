@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionButton } from '../../shared/data-table-h/data-table-h.component';
 import { ApiConfig, apiConfig } from '../../services/api-config'; // Adjust path as needed
-import { ApiServicesService } from '../../services/api-services.service';
+import { ApiService } from '../../services/api-services.service';
 import { Router } from '@angular/router';
 
 export interface AlbumTableRow {
@@ -24,7 +24,7 @@ export class ApiIntegrationComponent implements OnInit {
 
   tableData: AlbumTableRow[] = [];
   displayedColumns = ['AlbumID','artist', 'AlbumTitle', 'YearOfRelease'];
-  constructor(private apiService: ApiServicesService, private router: Router) {
+  constructor(private apiService: ApiService, private router: Router) {
     // Load the configuration for the specific API
     this.apiConfig = apiConfig.find(api => api.name === 'AlbumsAPI')!;
   }
@@ -49,11 +49,11 @@ export class ApiIntegrationComponent implements OnInit {
     ];
 
   ngOnInit(): void {
-    this.apiService.get('http://localhost:3000', 'api/albums/all').subscribe(
-      (data: AlbumTableRow[]) => {
-        this.tableData = data;
-        console.table(data);
-        console.table(this.tableData);
+    this.apiService.setConfig('AlbumsAPI');
+    this.apiService.get().subscribe(
+      data => {
+        this.apiData = data;
+        this.tableData = this.apiData;
       },
       error => {
         console.error('Error fetching data:', error);
@@ -67,7 +67,8 @@ export class ApiIntegrationComponent implements OnInit {
   }
 
   handleSave(updatedRow: AlbumTableRow): void {
-    this.apiService.put('http://localhost:3000', `api/albums/${updatedRow.AlbumID}`, updatedRow).subscribe(
+    this.apiService.setConfig('AlbumsAPI');
+    this.apiService.put(updatedRow.AlbumID, updatedRow).subscribe(
       response => {
         console.log('album updated successfully:', response);
       },

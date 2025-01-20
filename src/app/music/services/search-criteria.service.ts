@@ -13,6 +13,7 @@ export class SearchCriteriaService {
   }
 
   getSearchCriteria(): any {
+    console.log('Search criteria:', this.searchCriteriaSubject.getValue());
     return this.searchCriteriaSubject.getValue();
   }
 }

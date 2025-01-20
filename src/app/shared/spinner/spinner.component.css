@@ -1,0 +1,20 @@
+.spinner-container {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  font-size: larger;
+  
+}
+
+.mat-progress-spinner {
+    margin-bottom: 30px;
+  }
+
+.spinner-label {
+  min-width: 60px; /* or any other width that is wide enough to accommodate the text without dots */
+  text-align: center;
+}

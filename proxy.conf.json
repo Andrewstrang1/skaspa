@@ -1,9 +1,22 @@
 {
-    "/api": {
-      "target": "http://localhost:3000",
-      "secure": false,
-      "changeOrigin": true,
-      "logLevel": "debug"
-    }
+  "/api": {
+    "target": "http://localhost:3000",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/api/musicbrainz": {
+    "target": "https://musicbrainz.org/ws/2",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/musicbrainz": ""
+    },
+  "/ws/2": {
+  "target": "https://musicbrainz.org",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
-  
+  }
+}

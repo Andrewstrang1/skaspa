@@ -13,6 +13,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { SubFeatureTileViewComponent } from './sub-feature-tile-view/sub-feature-tile-view.component';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { SubFeatureWithDraggableTableComponent } from './sub-feature-with-draggable-table/sub-feature-with-draggable-table.component';
+import { MusictestComponent } from './musictest/musictest.component';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
       { path: 'api-integration', component: ApiIntegrationComponent },
       { path: 'app-sub-feature-tile-view', component: SubFeatureTileViewComponent },
       { path: 'product-details/:id', component: ProductDetailsComponent },
-      { path: 'draggable', component: SubFeatureWithDraggableTableComponent}
+      { path: 'draggable', component: SubFeatureWithDraggableTableComponent},
+      { path: 'musictest', component: MusictestComponent},
       ]
   }
 ];
@@ -40,7 +42,8 @@ const routes: Routes = [
     ApiIntegrationComponent,
     ProductDetailsComponent,
     SubFeatureTileViewComponent,
-    SubFeatureWithDraggableTableComponent
+    SubFeatureWithDraggableTableComponent,
+    MusictestComponent
   ],
   imports: [
     CommonModule,

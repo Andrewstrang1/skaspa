@@ -1,0 +1,30 @@
+nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  nav a {
+    margin-bottom: 10px;
+    display: block;
+  }
+  
+  nav a::before {
+    content: "\2022";
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: #666;
+  }
+  
+  nav a:hover {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  nav a.router-link-active {
+    font-weight: bold;
+    color: #333;
+  }

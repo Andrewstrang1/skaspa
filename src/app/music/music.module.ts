@@ -20,9 +20,8 @@ const routes: Routes = [
       path: '',
       component: MusicComponent,
       children: [
-        { path: '', component: SearchFormComponent },
         { path: 'results', component: ResultsTableComponent },
-        { path: 'details/:id', component: DetailsComponent },
+        { path: 'details', component: DetailsComponent },
       ],
     },
   ];

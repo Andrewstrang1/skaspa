@@ -11,10 +11,11 @@ export class SearchFormComponent {
   searchCriteria = {
     artist: '',
     title: '',
-    cat: '',
+    bestResult: false
   };
 
-  constructor(private searchCriteriaService: SearchCriteriaService) {}
+  featureToggleState: boolean = false;
+  constructor(private searchCriteriaService: SearchCriteriaService) { }
 
   @Output() search = new EventEmitter<any>();
 
@@ -28,4 +29,11 @@ export class SearchFormComponent {
     this.search.emit(this.searchCriteria);
 
   }
+
+  onToggleFeature(newState: boolean): void {
+    console.log('Toggle Switch Changed:', newState);
+    this.searchCriteria.bestResult = newState
+    this.featureToggleState = newState;
+  }
+
 }
