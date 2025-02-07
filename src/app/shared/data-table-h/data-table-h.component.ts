@@ -16,7 +16,7 @@ export interface ActionButton {
   templateUrl: './data-table-h.component.html',
   styleUrls: ['../shared-styles/data-table-h.component.css', '../shared-styles/data-table-h-purple-theme.css', 
     '../shared-styles/data-table-h-green-theme.css', '../shared-styles/data-table-h-blue-theme.css'
-  ], 
+  ],
 })
 export class DataTableHComponent implements OnChanges {
   @Input() data: any[] = [];
