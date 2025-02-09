@@ -1,0 +1,12 @@
+<div class="toaster-container" [ngClass]="position">
+  <div 
+    *ngFor="let toast of toasts; trackBy: trackById" 
+    class="toast" 
+    [ngClass]="getToastClass(toast)"
+    (click)="removeToast(toast.id)"
+  >
+    <span class="icon">{{ getIcon(toast.type) }}</span>
+    <span>{{ toast.message }}</span>
+    <button class="close-btn">&times;</button>
+  </div>
+</div>

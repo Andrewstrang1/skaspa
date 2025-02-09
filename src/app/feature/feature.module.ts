@@ -14,6 +14,7 @@ import { SubFeatureTileViewComponent } from './sub-feature-tile-view/sub-feature
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { SubFeatureWithDraggableTableComponent } from './sub-feature-with-draggable-table/sub-feature-with-draggable-table.component';
 import { MusictestComponent } from './musictest/musictest.component';
+import { ToasterTestComponent } from './toaster-test/toaster-test.component';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
       { path: 'product-details/:id', component: ProductDetailsComponent },
       { path: 'draggable', component: SubFeatureWithDraggableTableComponent},
       { path: 'musictest', component: MusictestComponent},
+      { path: 'toaster', component: ToasterTestComponent}
       ]
   }
 ];
@@ -43,13 +45,14 @@ const routes: Routes = [
     ProductDetailsComponent,
     SubFeatureTileViewComponent,
     SubFeatureWithDraggableTableComponent,
-    MusictestComponent
+    MusictestComponent,
+    ToasterTestComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,  // Import SharedModule to use DataTableComponents
-    ServicesModule, FormsModule,
+    FormsModule,
     NgbCarouselModule
   ]
 })

@@ -34,6 +34,7 @@ import { NavigationDropdownComponent } from './navigation-dropdown/navigation-dr
 
 
 
+
 @NgModule({
   declarations: [
     DataTableComponent,       // Material component
@@ -45,7 +46,7 @@ import { NavigationDropdownComponent } from './navigation-dropdown/navigation-dr
     DraggableDataTableComponent,
     ToggleSwitchComponent,
     SpinnerComponent,
-    NavigationDropdownComponent
+    NavigationDropdownComponent,
 
   ],
   imports: [

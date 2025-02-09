@@ -1,10 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicBrainzService } from '../../music/services/musicBrainz.service';
 import { DiscogsService } from '../../music/services/discogs.service';
+import { LoggerService } from '../../services/logger.service';
+import { LOGGER_CONFIG } from '../../services/logger-config';
+
+
+
 @Component({
   selector: 'app-musictest',
   templateUrl: './musictest.component.html',
-  styleUrls: ['./musictest.component.css']
+  styleUrls: ['./musictest.component.css'],
+  providers: [
+    // Provide a custom configuration: disable DB logging (default = off)
+    { provide: LOGGER_CONFIG, useValue: { useDatabase: true } },
+  ]
 })
 export class MusictestComponent implements OnInit {
 
@@ -15,7 +24,7 @@ export class MusictestComponent implements OnInit {
 
   selecetdAPI: string = 'MusicBrainz';
 
-  constructor(private musicBrainzService: MusicBrainzService, private discogsService: DiscogsService) {}
+  constructor(private musicBrainzService: MusicBrainzService, private discogsService: DiscogsService, private logger: LoggerService) {}
 
   // fetchReleases based on which API is selected
   fetchReleases(): void {
@@ -31,7 +40,7 @@ export class MusictestComponent implements OnInit {
 
   fetchReleasesFromMusicBrainz(): void {
     if (this.artist && this.albumTitle) {
-      console.log(this.artist, this.albumTitle);
+      this.logger.log('success', 'Fetching releases for ' + this.artist + ' - ' + this.albumTitle);
       this.musicBrainzService.searchAlbumByArtist(this.artist, this.albumTitle).subscribe(
         (data) => {
           // filter out results that are have 

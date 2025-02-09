@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DataServicesService } from './data-services.service';
 import { ApiService } from './api-services.service';
 import { SearchCriteriaService } from '../music/services/search-criteria.service';
+import { LoggerService } from './logger.service';
 
 
 @NgModule({
@@ -10,6 +11,7 @@ import { SearchCriteriaService } from '../music/services/search-criteria.service
   imports: [
     CommonModule
   ],
-  providers: [DataServicesService, ApiService, SearchCriteriaService]
+  providers: [DataServicesService, ApiService, SearchCriteriaService, LoggerService],
+ 
 })
 export class ServicesModule { }
